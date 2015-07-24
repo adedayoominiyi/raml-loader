@@ -15,6 +15,9 @@
  */
 package guru.nidi.raml.loader;
 
+import guru.nidi.raml.loader.impl.ClassPathRamlLoader;
+import guru.nidi.raml.loader.impl.CompositeRamlLoader;
+import guru.nidi.raml.loader.impl.FileRamlLoader;
 import guru.nidi.raml.loader.impl.RamlLoader;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -43,8 +46,10 @@ public class LoadersTest {
 
     @Test
     public void loadFileWithSecondLoader() {
-        RamlLoaders.fromFile(new File("src/test/resources/guru/nidi/raml/loader/sub"))
-                .andFromClasspath("guru/nidi/raml/loader")
+        RamlLoaders.using(
+                new CompositeRamlLoader(
+                        new FileRamlLoader(new File("src/test/resources/guru/nidi/raml/loader/sub")),
+                        new ClassPathRamlLoader("guru/nidi/raml/loader")))
                 .load("simple.raml");
     }
 }

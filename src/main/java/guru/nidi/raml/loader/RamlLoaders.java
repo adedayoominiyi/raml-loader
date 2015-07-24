@@ -29,7 +29,7 @@ public class RamlLoaders {
     private final RamlLoader loader;
     private final boolean caching;
 
-    public RamlLoaders(RamlLoader loader,  boolean caching) {
+    private RamlLoaders(RamlLoader loader, boolean caching) {
         this.loader = loader;
         this.caching = caching;
     }
@@ -117,44 +117,11 @@ public class RamlLoaders {
     }
 
     public static RamlLoaders using(RamlLoader loader) {
-        return new RamlLoaders(loader,  false);
+        return new RamlLoaders(loader, false);
     }
 
-
-    public RamlLoaders andFromClasspath(Class<?> basePackage) {
-        return andUsing(classpathLoader(basePackage));
-    }
-
-    public RamlLoaders andFromClasspath(String basePackage) {
-        return andUsing(classpathLoader(basePackage));
-    }
-
-    public RamlLoaders andFromFile(File baseDirectory) {
-        return andUsing(fileLoader(baseDirectory));
-    }
-
-    public RamlLoaders andFromUrl(String baseUrl) {
-        return andUsing(urlLoader(baseUrl));
-    }
-
-    public RamlLoaders andFromGithub(String project) {
-        return andFromGithub(null, project);
-    }
-
-    public RamlLoaders andFromGithub(String token, String project) {
-        return andUsing(githubLoader(token, project));
-    }
-
-    public RamlLoaders andFromApiPortal(String user, String password) {
-        return andUsing(apiPortalLoader(user, password));
-    }
-
-    public RamlLoaders andFromApiDesigner(String url) {
-        return andUsing(apiDesignerLoader(url));
-    }
-
-    public RamlLoaders andUsing(RamlLoader loader) {
-        return new RamlLoaders(new CompositeRamlLoader(this.loader, loader), caching);
+    public RamlLoaders caching(boolean caching) {
+        return new RamlLoaders(loader, caching);
     }
 
     public Raml load(String name) {
