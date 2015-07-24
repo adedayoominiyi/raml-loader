@@ -34,19 +34,19 @@ import static org.junit.Assume.assumeThat;
 public class LoaderTest {
     @Test
     public void classPathOk() throws IOException {
-        final InputStream in = new ClassPathRamlLoader("guru/nidi/ramltester").fetchResource("simple.raml", -1);
+        final InputStream in = new ClassPathRamlLoader("guru/nidi/raml/loader").fetchResource("simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
 
     @Test
     public void classPathWithEndSlash() throws IOException {
-        final InputStream in = new ClassPathRamlLoader("guru/nidi/ramltester/").fetchResource("simple.raml", -1);
+        final InputStream in = new ClassPathRamlLoader("guru/nidi/raml/loader/").fetchResource("simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
 
     @Test
     public void emptyBaseClassPath() throws IOException {
-        final InputStream in = new ClassPathRamlLoader().fetchResource("guru/nidi/ramltester/simple.raml", -1);
+        final InputStream in = new ClassPathRamlLoader().fetchResource("guru/nidi/raml/loader/simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
 
@@ -62,18 +62,18 @@ public class LoaderTest {
 
     @Test
     public void fileInClassPathNotModified() throws IOException {
-        final long mod = new File("target/test-classes/guru/nidi/ramltester/simple.raml").lastModified();
-        assertNull(new ClassPathRamlLoader("guru/nidi/ramltester").fetchResource("simple.raml", mod + 1));
+        final long mod = new File("target/test-classes/guru/nidi/raml/loader/simple.raml").lastModified();
+        assertNull(new ClassPathRamlLoader("guru/nidi/raml/loader").fetchResource("simple.raml", mod + 1));
     }
 
     @Test(expected = RamlLoader.ResourceNotFoundException.class)
     public void classPathNok() {
-        new ClassPathRamlLoader("guru/nidi/ramltester").fetchResource("bla", -1);
+        new ClassPathRamlLoader("guru/nidi/raml/loader").fetchResource("bla", -1);
     }
 
     @Test
     public void fileOk() throws IOException {
-        final URL resource = Thread.currentThread().getContextClassLoader().getResource("guru/nidi/ramltester");
+        final URL resource = Thread.currentThread().getContextClassLoader().getResource("guru/nidi/raml/loader");
         assertEquals("file", resource.getProtocol());
         final InputStream in = new FileRamlLoader(new File(resource.getPath())).fetchResource("simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
@@ -81,7 +81,7 @@ public class LoaderTest {
 
     @Test
     public void fileNotModified() throws IOException {
-        final URL resource = Thread.currentThread().getContextClassLoader().getResource("guru/nidi/ramltester");
+        final URL resource = Thread.currentThread().getContextClassLoader().getResource("guru/nidi/raml/loader");
         assertEquals("file", resource.getProtocol());
         final long mod = new File(resource.getPath()).lastModified();
         assertNull(new FileRamlLoader(new File(resource.getPath())).fetchResource("simple.raml", mod + 1));
@@ -89,7 +89,7 @@ public class LoaderTest {
 
     @Test(expected = RamlLoader.ResourceNotFoundException.class)
     public void fileNok() {
-        final URL resource = Thread.currentThread().getContextClassLoader().getResource("guru/nidi/ramltester");
+        final URL resource = Thread.currentThread().getContextClassLoader().getResource("guru/nidi/raml/loader");
         assertEquals("file", resource.getProtocol());
         new FileRamlLoader(new File(resource.getPath())).fetchResource("bla", -1);
     }
@@ -108,13 +108,13 @@ public class LoaderTest {
 
     @Test
     public void loadFile() throws IOException {
-        final InputStream in = new FileRamlLoader(new File("src/test/resources/guru/nidi/ramltester")).fetchResource("simple.raml", -1);
+        final InputStream in = new FileRamlLoader(new File("src/test/resources/guru/nidi/raml/loader")).fetchResource("simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
 
     @Test
     public void publicGithub() throws IOException {
-        final InputStream in = new GithubRamlLoader("nidi3/raml-tester").fetchResource("src/test/resources/guru/nidi/ramltester/simple.raml", -1);
+        final InputStream in = new GithubRamlLoader("nidi3/raml-loader").fetchResource("src/test/resources/guru/nidi/raml/loader/simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
 
@@ -150,8 +150,8 @@ public class LoaderTest {
 
     @Test
     public void loadFileWithSecondLoader() {
-        RamlLoaders.fromFile(new File("src/test/resources/guru/nidi/ramltester/sub"))
-                .andFromClasspath("guru/nidi/ramltester")
+        RamlLoaders.fromFile(new File("src/test/resources/guru/nidi/raml/loader/sub"))
+                .andFromClasspath("guru/nidi/raml/loader")
                 .load("simple.raml");
     }
 

@@ -61,17 +61,17 @@ public class UriLoaderTest extends ServerTest {
 
     @Test
     public void classpath() {
-        assertNotNull(RamlLoaders.absolutely().load("classpath://guru/nidi/ramltester/simple.raml"));
+        assertNotNull(RamlLoaders.absolutely().load("classpath://guru/nidi/raml/loader/simple.raml"));
     }
 
     @Test
     public void url() {
-        assertNotNull(RamlLoaders.absolutely().load("http://localhost:" + port() + "/deliver/form.raml"));
+        assertNotNull(RamlLoaders.absolutely().load("http://localhost:" + port() + "/deliver/simple.raml"));
     }
 
     @Test
     public void publicGithub() {
-        assertNotNull(RamlLoaders.absolutely().load("github://nidi3/raml-tester/src/test/resources/guru/nidi/ramltester/uri.raml"));
+        assertNotNull(RamlLoaders.absolutely().load("github://nidi3/raml-loader/src/test/resources/guru/nidi/raml/loader/simple.raml"));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class UriLoaderTest extends ServerTest {
 
     @Test
     public void ramlWithAbsoluteIncludes() {
-        assertNotNull(RamlLoaders.absolutely().load("http://localhost:" + port() + "/deliver/load.raml"));
+        assertNotNull(RamlLoaders.absolutely().load("http://localhost:" + port() + "/deliver/simple.raml"));
     }
 
     private static class FileDeliveringServlet extends HttpServlet {
