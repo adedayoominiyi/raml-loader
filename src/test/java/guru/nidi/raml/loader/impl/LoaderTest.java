@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader;
+package guru.nidi.raml.loader.impl;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -24,9 +23,7 @@ import java.util.Date;
 
 import static guru.nidi.raml.loader.util.TestUtils.getEnv;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
-import static org.junit.Assume.assumeThat;
 
 /**
  *
@@ -135,31 +132,9 @@ public class LoaderTest {
         assertStreamStart(in, "blog");
     }
 
-    @Test
-    @Ignore
-    public void apiPortalReferenced() throws IOException {
-        final RamlLoaders ramlLoader = RamlLoaders.fromApiPortal(getEnv("API_PORTAL_USER"), getEnv("API_PORTAL_PASS"));
-//        final RamlDefinition ramlDefinition = ramlLoader.load("test.raml");
-//        assertNoViolations(ramlDefinition, get("/test"), jsonResponse(200, "\"hula\""));
-    }
-
-    @Test(expected = RamlLoader.ResourceNotFoundException.class)
-    public void loadFileWithUnfindableReference() {
-        RamlLoaders.fromFile(new File("src/test/resources/guru/nidi/ramltester/sub")).load("simple.raml");
-    }
-
-    @Test
-    public void loadFileWithSecondLoader() {
-        RamlLoaders.fromFile(new File("src/test/resources/guru/nidi/raml/loader/sub"))
-                .andFromClasspath("guru/nidi/raml/loader")
-                .load("simple.raml");
-    }
-
     private void assertStreamStart(InputStream in, String s) throws IOException {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             assertThat(reader.readLine(), equalTo(s));
         }
     }
-
-
 }

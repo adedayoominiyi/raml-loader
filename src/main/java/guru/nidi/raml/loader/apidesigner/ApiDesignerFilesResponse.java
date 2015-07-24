@@ -15,8 +15,8 @@
  */
 package guru.nidi.raml.loader.apidesigner;
 
-import guru.nidi.raml.loader.RepositoryEntry;
-import guru.nidi.raml.loader.RepositoryResponse;
+import guru.nidi.raml.loader.impl.RepositoryEntry;
+import guru.nidi.raml.loader.impl.RepositoryResponse;
 
 import java.util.AbstractMap;
 import java.util.HashMap;

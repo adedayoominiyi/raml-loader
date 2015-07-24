@@ -16,7 +16,7 @@
 package guru.nidi.raml.loader.apidesigner;
 
 
-import guru.nidi.raml.loader.RepositoryEntry;
+import guru.nidi.raml.loader.impl.RepositoryEntry;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

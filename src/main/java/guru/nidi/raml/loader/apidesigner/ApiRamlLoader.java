@@ -15,7 +15,7 @@
  */
 package guru.nidi.raml.loader.apidesigner;
 
-import guru.nidi.raml.loader.*;
+import guru.nidi.raml.loader.impl.*;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 

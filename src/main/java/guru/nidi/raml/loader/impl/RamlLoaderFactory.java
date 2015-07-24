@@ -13,24 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader;
-
-import org.raml.parser.loader.ResourceLoader;
-
-import java.io.InputStream;
+package guru.nidi.raml.loader.impl;
 
 /**
  *
  */
-public class RamlLoaderRamlParserResourceLoader implements ResourceLoader {
-    private final RamlLoader delegate;
+public interface RamlLoaderFactory {
+    String supportedProtocol();
 
-    public RamlLoaderRamlParserResourceLoader(RamlLoader delegate) {
-        this.delegate = delegate;
-    }
-
-    @Override
-    public InputStream fetchResource(String resourceName) {
-        return delegate.fetchResource(resourceName, -1);
-    }
+    RamlLoader getRamlLoader(String base, String username, String password);
 }
