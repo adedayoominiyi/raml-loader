@@ -16,6 +16,7 @@
 package guru.nidi.raml.loader.impl;
 
 import org.junit.Test;
+import org.raml.parser.visitor.RamlDocumentBuilder;
 
 import java.io.*;
 import java.net.URL;
@@ -29,6 +30,13 @@ import static org.junit.Assert.*;
  *
  */
 public class LoaderTest {
+    @Test
+    public void includeHandlerNotClosingStream() {
+        new RamlDocumentBuilder(new RamlLoaderRamlParserResourceLoader(
+                new UrlRamlLoader("http://deadleg.github.io/bugs")))
+                .build("test.raml");
+    }
+
     @Test
     public void classPathOk() throws IOException {
         final InputStream in = new ClassPathRamlLoader("guru/nidi/raml/loader").fetchResource("simple.raml", -1);

@@ -15,6 +15,7 @@
  */
 package guru.nidi.raml.loader.impl;
 
+import org.apache.commons.io.input.AutoCloseInputStream;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -49,7 +50,9 @@ public class UrlRamlLoader implements RamlLoader {
     @Override
     public InputStream fetchResource(String name, long ifModifiedSince) {
         try {
-            return fetcher.fetchFromUrl(client, base, name, ifModifiedSince);
+            // remove AutoCloseInputStream as soon as
+            // https://github.com/raml-org/raml-java-parser/issues/72 is fixed
+            return new AutoCloseInputStream(fetcher.fetchFromUrl(client, base, name, ifModifiedSince));
         } catch (IOException e) {
             throw new ResourceNotFoundException(name, e);
         }
