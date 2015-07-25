@@ -13,16 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader.impl;
+package guru.nidi.raml.loader.model;
 
-import org.apache.http.impl.client.CloseableHttpClient;
+import guru.nidi.raml.loader.model.RamlLoader;
+import org.raml.parser.loader.ResourceLoader;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
  *
  */
-public interface UrlFetcher {
-    InputStream fetchFromUrl(CloseableHttpClient client, String base, String name, long ifModifiedSince) throws IOException;
+public class RamlLoaderRamlParserResourceLoader implements ResourceLoader {
+    private final RamlLoader delegate;
+
+    public RamlLoaderRamlParserResourceLoader(RamlLoader delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    public InputStream fetchResource(String resourceName) {
+        return delegate.fetchResource(resourceName, -1);
+    }
 }

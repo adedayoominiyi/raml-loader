@@ -15,7 +15,7 @@
  */
 package guru.nidi.raml.loader.apidesigner;
 
-import guru.nidi.raml.loader.impl.RepositoryEntry;
+import guru.nidi.raml.loader.repo.RepositoryEntry;
 
 /**
  *

@@ -15,8 +15,8 @@
  */
 package guru.nidi.raml.loader.apidesigner;
 
-import guru.nidi.raml.loader.impl.RamlLoader;
-import guru.nidi.raml.loader.impl.RamlLoaderRamlParserResourceLoader;
+import guru.nidi.raml.loader.model.RamlLoader;
+import guru.nidi.raml.loader.model.RamlLoaderRamlParserResourceLoader;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

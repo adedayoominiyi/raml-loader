@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader.impl;
+package guru.nidi.raml.loader.repo;
 
 /**
  *
  */
-public interface RepositoryResponse {
-    Iterable<? extends RepositoryEntry> getFiles();
+public interface RepositoryEntry {
+    String getName();
+
+    String getPath();
+
+    String getContent();
 }

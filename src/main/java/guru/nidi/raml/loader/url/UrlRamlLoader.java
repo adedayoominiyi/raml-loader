@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader.impl;
+package guru.nidi.raml.loader.url;
 
+import guru.nidi.raml.loader.model.RamlLoader;
+import guru.nidi.raml.loader.model.RamlLoaderFactory;
 import org.apache.commons.io.input.AutoCloseInputStream;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;

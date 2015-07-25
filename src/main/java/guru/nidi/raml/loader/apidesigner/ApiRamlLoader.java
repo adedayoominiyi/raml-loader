@@ -15,7 +15,12 @@
  */
 package guru.nidi.raml.loader.apidesigner;
 
-import guru.nidi.raml.loader.impl.*;
+import guru.nidi.raml.loader.model.RamlLoader;
+import guru.nidi.raml.loader.model.RamlLoaderFactory;
+import guru.nidi.raml.loader.repo.RepositoryRamlLoader;
+import guru.nidi.raml.loader.url.FormLoginUrlFetcher;
+import guru.nidi.raml.loader.url.SimpleUrlFetcher;
+import guru.nidi.raml.loader.url.UrlRamlLoader;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 

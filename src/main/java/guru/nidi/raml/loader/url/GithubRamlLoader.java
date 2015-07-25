@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader.impl;
+package guru.nidi.raml.loader.url;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import guru.nidi.raml.loader.model.RamlLoader;
+import guru.nidi.raml.loader.model.RamlLoaderFactory;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 

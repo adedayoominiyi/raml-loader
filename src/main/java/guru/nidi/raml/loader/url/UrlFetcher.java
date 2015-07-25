@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader.impl;
+package guru.nidi.raml.loader.url;
+
+import org.apache.http.impl.client.CloseableHttpClient;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  *
  */
-public interface RamlLoaderFactory {
-    String supportedProtocol();
-
-    RamlLoader getRamlLoader(String base, String username, String password);
+public interface UrlFetcher {
+    InputStream fetchFromUrl(CloseableHttpClient client, String base, String name, long ifModifiedSince) throws IOException;
 }

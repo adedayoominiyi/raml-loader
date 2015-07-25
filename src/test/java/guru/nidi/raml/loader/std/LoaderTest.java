@@ -13,8 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader.impl;
+package guru.nidi.raml.loader.std;
 
+import guru.nidi.raml.loader.model.RamlLoader;
+import guru.nidi.raml.loader.model.RamlLoaderRamlParserResourceLoader;
+import guru.nidi.raml.loader.url.GithubRamlLoader;
+import guru.nidi.raml.loader.url.UrlRamlLoader;
 import org.junit.Test;
 import org.raml.parser.visitor.RamlDocumentBuilder;
 

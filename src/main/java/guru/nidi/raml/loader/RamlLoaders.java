@@ -16,7 +16,11 @@
 package guru.nidi.raml.loader;
 
 import guru.nidi.raml.loader.apidesigner.ApiRamlLoader;
-import guru.nidi.raml.loader.impl.*;
+import guru.nidi.raml.loader.model.RamlLoaderRamlParserResourceLoader;
+import guru.nidi.raml.loader.std.*;
+import guru.nidi.raml.loader.model.RamlLoader;
+import guru.nidi.raml.loader.url.GithubRamlLoader;
+import guru.nidi.raml.loader.url.UrlRamlLoader;
 import org.raml.model.Raml;
 import org.raml.parser.visitor.RamlDocumentBuilder;
 

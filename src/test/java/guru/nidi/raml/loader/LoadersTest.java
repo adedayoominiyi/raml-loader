@@ -15,10 +15,10 @@
  */
 package guru.nidi.raml.loader;
 
-import guru.nidi.raml.loader.impl.ClassPathRamlLoader;
-import guru.nidi.raml.loader.impl.CompositeRamlLoader;
-import guru.nidi.raml.loader.impl.FileRamlLoader;
-import guru.nidi.raml.loader.impl.RamlLoader;
+import guru.nidi.raml.loader.std.ClassPathRamlLoader;
+import guru.nidi.raml.loader.std.CompositeRamlLoader;
+import guru.nidi.raml.loader.std.FileRamlLoader;
+import guru.nidi.raml.loader.model.RamlLoader;
 import org.junit.Ignore;
 import org.junit.Test;
 

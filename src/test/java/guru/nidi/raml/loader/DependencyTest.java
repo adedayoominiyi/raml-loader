@@ -49,12 +49,25 @@ public class DependencyTest {
         final JavaPackage
                 base = constraint.addPackage(BASE),
                 apidesigner = constraint.addPackage(BASE + ".apidesigner"),
-                impl = constraint.addPackage(BASE + ".impl");
+                model = constraint.addPackage(BASE + ".model"),
+                repo = constraint.addPackage(BASE + ".repo"),
+                std = constraint.addPackage(BASE + ".std"),
+                url = constraint.addPackage(BASE + ".url");
 
+        base.dependsUpon(model);
         base.dependsUpon(apidesigner);
-        base.dependsUpon(impl);
+        base.dependsUpon(url);
+        base.dependsUpon(std);
 
-        apidesigner.dependsUpon(impl);
+        apidesigner.dependsUpon(repo);
+        apidesigner.dependsUpon(url);
+        apidesigner.dependsUpon(model);
+
+        repo.dependsUpon(model);
+
+        std.dependsUpon(model);
+
+        url.dependsUpon(model);
 
         assertTrue("Dependency mismatch", depend.dependencyMatch(constraint));
     }
@@ -74,7 +87,7 @@ public class DependencyTest {
         for (JavaPackage pack : packages) {
             if (pack.getName().startsWith("guru.")) {
                 System.out.printf("%-40s: %-1.2f  %-1.2f  %-1.2f%n", pack.getName(), pack.abstractness(), pack.instability(), pack.distance());
-                assertEquals("Distance exceeded: " + pack.getName(), 0, pack.distance(), .86f);
+                assertEquals("Distance exceeded: " + pack.getName(), 0, pack.distance(), .60f);
             }
         }
     }
