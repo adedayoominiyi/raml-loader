@@ -60,6 +60,11 @@ public class UriLoaderTest extends ServerTest {
     }
 
     @Test
+    public void classpathRoot() {
+        assertNotNull(RamlLoaders.absolutely().load("classpath://simple.raml"));
+    }
+
+    @Test
     public void classpath() {
         assertNotNull(RamlLoaders.absolutely().load("classpath://guru/nidi/raml/loader/simple.raml"));
     }

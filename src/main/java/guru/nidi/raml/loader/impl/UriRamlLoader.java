@@ -55,7 +55,7 @@ public class UriRamlLoader implements RamlLoader {
         final Matcher matcher = ABSOLUTE_URI_PATTERN.matcher(name);
         if (matcher.matches()) {
             String path = matcher.group(GROUP_PATH);
-            String res = null;
+            String res = "";
             final int lastSlash = path.lastIndexOf('/');
             if (lastSlash >= 0 && lastSlash < path.length() - 1) {
                 res = path.substring(lastSlash + 1);
