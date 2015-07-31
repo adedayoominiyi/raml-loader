@@ -47,17 +47,11 @@ public class DependencyTest {
         DependencyConstraint constraint = new DependencyConstraint();
 
         final JavaPackage
-                base = constraint.addPackage(BASE),
                 apidesigner = constraint.addPackage(BASE + ".apidesigner"),
                 model = constraint.addPackage(BASE + ".model"),
                 repo = constraint.addPackage(BASE + ".repo"),
                 std = constraint.addPackage(BASE + ".std"),
                 url = constraint.addPackage(BASE + ".url");
-
-        base.dependsUpon(model);
-        base.dependsUpon(apidesigner);
-        base.dependsUpon(url);
-        base.dependsUpon(std);
 
         apidesigner.dependsUpon(repo);
         apidesigner.dependsUpon(url);

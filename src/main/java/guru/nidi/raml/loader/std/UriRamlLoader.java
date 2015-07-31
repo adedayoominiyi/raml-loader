@@ -48,6 +48,10 @@ public class UriRamlLoader implements RamlLoader {
 
     private final RamlLoader relativeLoader;
 
+    public UriRamlLoader() {
+        this(null);
+    }
+
     public UriRamlLoader(RamlLoader relativeLoader) {
         this.relativeLoader = relativeLoader;
     }

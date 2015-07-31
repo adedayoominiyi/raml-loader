@@ -120,6 +120,11 @@ public class LoaderTest {
         final InputStream in = new FileRamlLoader(new File("src/test/resources/guru/nidi/raml/loader")).fetchResource("simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
+    @Test(expected = RamlLoader.ResourceNotFoundException.class)
+    public void loadFileWithUnfindableReference() {
+        new FileRamlLoader(new File("src/test/resources/guru/nidi/ramltester/sub")).fetchResource("simple.raml",-1);
+    }
+
 
     @Test
     public void publicGithub() throws IOException {
@@ -142,6 +147,15 @@ public class LoaderTest {
     public void privateGithub() throws IOException {
         final InputStream in = new GithubRamlLoader(getEnv("GITHUB_TOKEN"), "nidi3/blog").fetchResource("README.md", -1);
         assertStreamStart(in, "blog");
+    }
+
+    @Test
+    public void loadFileWithSecondLoader() throws IOException {
+        final InputStream in = new CompositeRamlLoader(
+                new FileRamlLoader(new File("src/test/resources/guru/nidi/raml/loader/sub")),
+                new ClassPathRamlLoader("guru/nidi/raml/loader"))
+                .fetchResource("simple.raml", -1);
+        assertStreamStart(in, "#%RAML 0.8");
     }
 
     private void assertStreamStart(InputStream in, String s) throws IOException {

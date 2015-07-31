@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.raml.loader;
+package guru.nidi.raml.loader.std;
 
 import guru.nidi.raml.loader.util.ServerTest;
 import org.apache.catalina.Context;
@@ -51,54 +51,54 @@ public class UriLoaderTest extends ServerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void absoluteWithoutProtocol() {
-        RamlLoaders.absolutely().load("relative.raml");
+        new UriRamlLoader().fetchResource("relative.raml", -1);
     }
 
     @Test
     public void file() {
-        assertNotNull(RamlLoaders.absolutely().load("file://" + getClass().getResource("simple.raml").getFile()));
+        assertNotNull(new UriRamlLoader().fetchResource("file://" + getClass().getResource("sub.raml").getFile(), -1));
     }
 
     @Test
     public void classpathRoot() {
-        assertNotNull(RamlLoaders.absolutely().load("classpath://simple.raml"));
+        assertNotNull(new UriRamlLoader().fetchResource("classpath://simple.raml", -1));
     }
 
     @Test
     public void classpath() {
-        assertNotNull(RamlLoaders.absolutely().load("classpath://guru/nidi/raml/loader/simple.raml"));
+        assertNotNull(new UriRamlLoader().fetchResource("classpath://guru/nidi/raml/loader/simple.raml", -1));
     }
 
     @Test
     public void url() {
-        assertNotNull(RamlLoaders.absolutely().load("http://localhost:" + port() + "/deliver/simple.raml"));
+        assertNotNull(new UriRamlLoader().fetchResource("http://localhost:" + port() + "/deliver/sub.raml", -1));
     }
 
     @Test
     public void publicGithub() {
-        assertNotNull(RamlLoaders.absolutely().load("github://nidi3/raml-loader/src/test/resources/guru/nidi/raml/loader/simple.raml"));
+        assertNotNull(new UriRamlLoader().fetchResource("github://nidi3/raml-loader/src/test/resources/guru/nidi/raml/loader/simple.raml", -1));
     }
 
     @Test
     public void privateGithub() throws IOException {
-        assertNotNull(RamlLoaders.absolutely().load(getEnv("GITHUB_TOKEN") + "@github://nidi3/blog/simple.raml"));
+        assertNotNull(new UriRamlLoader().fetchResource(getEnv("GITHUB_TOKEN") + "@github://nidi3/blog/simple.raml", -1));
     }
 
     @Test
     @Ignore
     public void apiPortal() {
-        assertNotNull(RamlLoaders.absolutely().load(getEnv("API_PORTAL_USER") + ":" + getEnv("API_PORTAL_PASS") + "@apiportal://test.raml"));
+        assertNotNull(new UriRamlLoader().fetchResource(getEnv("API_PORTAL_USER") + ":" + getEnv("API_PORTAL_PASS") + "@apiportal://test.raml", -1));
     }
 
     @Test
     @Ignore
     public void apiDesigner() {
-        assertNotNull(RamlLoaders.absolutely().load("apidesigner://todo"));
+        assertNotNull(new UriRamlLoader().fetchResource("apidesigner://todo", -1));
     }
 
     @Test
     public void ramlWithAbsoluteIncludes() {
-        assertNotNull(RamlLoaders.absolutely().load("http://localhost:" + port() + "/deliver/simple.raml"));
+        assertNotNull(new UriRamlLoader().fetchResource("http://localhost:" + port() + "/deliver/sub.raml", -1));
     }
 
     private static class FileDeliveringServlet extends HttpServlet {

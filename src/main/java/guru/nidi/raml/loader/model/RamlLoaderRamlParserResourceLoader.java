@@ -15,7 +15,6 @@
  */
 package guru.nidi.raml.loader.model;
 
-import guru.nidi.raml.loader.model.RamlLoader;
 import org.raml.parser.loader.ResourceLoader;
 
 import java.io.InputStream;
