@@ -1,0 +1,8 @@
+guru.nidi.loader.basic.ClassPathLoader$Factory
+guru.nidi.loader.basic.FileLoader$Factory
+guru.nidi.loader.url.UrlLoader$HttpFactory
+guru.nidi.loader.url.UrlLoader$HttpsFactory
+guru.nidi.loader.url.GithubLoader$Factory
+guru.nidi.loader.apidesigner.ApiLoader$PortalFactory
+guru.nidi.loader.apidesigner.ApiLoader$DesignerFactory
+
