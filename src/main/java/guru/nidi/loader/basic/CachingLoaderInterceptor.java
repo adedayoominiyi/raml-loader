@@ -23,7 +23,7 @@ import java.io.*;
 public abstract class CachingLoaderInterceptor implements LoaderInterceptor {
     @Override
     public InputStream loaded(String name, InputStream result) {
-        try (final BufferedInputStream in = new BufferedInputStream(result);
+        try (final InputStream in = new BufferedInputStream(result);
              final ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             final byte[] buf = new byte[10000];
             int read;
