@@ -29,10 +29,12 @@
     </scm>
 
     <dependencies>
+        <!--only for use with guru.nidi.loader.use.raml package-->
         <dependency>
             <groupId>org.raml</groupId>
             <artifactId>raml-parser</artifactId>
             <version>0.8.11</version>
+            <optional>true</optional>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>

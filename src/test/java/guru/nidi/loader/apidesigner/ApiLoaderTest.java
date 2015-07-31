@@ -15,9 +15,9 @@
  */
 package guru.nidi.loader.apidesigner;
 
-import guru.nidi.loader.util.TestUtils;
 import guru.nidi.loader.Loader;
 import guru.nidi.loader.use.raml.RamlLoad;
+import guru.nidi.loader.util.TestUtils;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
