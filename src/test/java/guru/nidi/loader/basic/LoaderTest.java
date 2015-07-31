@@ -126,7 +126,7 @@ public class LoaderTest {
 
     @Test
     public void publicGithub() throws IOException {
-        final InputStream in = new GithubLoader("nidi3/raml-loader").fetchResource("src/test/resources/guru/nidi/raml/loader/simple.raml", -1);
+        final InputStream in = new GithubLoader("nidi3/raml-loader").fetchResource("src/test/resources/guru/nidi/loader/simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
 

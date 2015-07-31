@@ -59,9 +59,11 @@ public class DependencyTest {
         final JavaPackage
                 apidesigner = constraint.addPackage(BASE + ".apidesigner"),
                 basic = constraint.addPackage(BASE + ".basic"),
-                raml = constraint.addPackage(BASE + ".raml"),
                 repo = constraint.addPackage(BASE + ".repository"),
                 url = constraint.addPackage(BASE + ".url"),
+                jsonschema = constraint.addPackage(BASE + ".use.jsonschema"),
+                raml = constraint.addPackage(BASE + ".use.raml"),
+                xml = constraint.addPackage(BASE + ".use.xml"),
                 base = constraint.addPackage(BASE),
                 parserModel = constraint.addPackage("org.raml.model"),
                 parserParser = constraint.addPackage("org.raml.parser");
@@ -72,10 +74,14 @@ public class DependencyTest {
 
         basic.dependsUpon(base);
 
+        jsonschema.dependsUpon(base);
+
         raml.dependsUpon(parserModel);
         //jdepend is not clever enough to find this dependency
 //        raml.dependsUpon(parserParser);
         raml.dependsUpon(base);
+
+        xml.dependsUpon(base);
 
         repo.dependsUpon(base);
 

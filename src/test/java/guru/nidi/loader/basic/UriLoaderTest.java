@@ -76,7 +76,7 @@ public class UriLoaderTest extends ServerTest {
 
     @Test
     public void publicGithub() {
-        assertNotNull(new UriLoader().fetchResource("github://nidi3/raml-loader/src/test/resources/guru/nidi/raml/loader/simple.raml", -1));
+        assertNotNull(new UriLoader().fetchResource("github://nidi3/raml-loader/src/test/resources/guru/nidi/loader/simple.raml", -1));
     }
 
     @Test
