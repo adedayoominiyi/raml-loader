@@ -156,6 +156,23 @@ public class LoaderTest {
         assertStreamStart(in, "#%RAML 0.8");
     }
 
+    @Test
+    public void cachingLoaderInterceptor() throws IOException {
+        class TestLoaderInterceptor extends CachingLoaderInterceptor {
+            private byte[] data;
+
+            @Override
+            protected void processLoaded(String name, byte[] data) {
+                this.data = data;
+            }
+        }
+        final TestLoaderInterceptor tli = new TestLoaderInterceptor();
+        final InputStream in = new InterceptingLoader(new ClassPathLoader("guru/nidi/loader"), tli)
+                .fetchResource("simple.raml", -1);
+        assertStreamStart(in, "#%RAML 0.8");
+        assertStreamStart(new ByteArrayInputStream(tli.data), "#%RAML 0.8");
+    }
+
     private void assertStreamStart(InputStream in, String s) throws IOException {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             assertThat(reader.readLine(), equalTo(s));
