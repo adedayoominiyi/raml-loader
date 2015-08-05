@@ -40,7 +40,7 @@ public class ClassPathLoader implements Loader {
 
     @Override
     public InputStream fetchResource(String name, long ifModifiedSince) {
-        final URL url = Thread.currentThread().getContextClassLoader().getResource(base + name);
+        final URL url = Thread.currentThread().getContextClassLoader().getResource(normalize(name));
         if (url == null) {
             throw new ResourceNotFoundException(name);
         }
@@ -63,6 +63,20 @@ public class ClassPathLoader implements Loader {
         } catch (IOException e) {
             throw new ResourceNotFoundException(name, e);
         }
+    }
+
+    private String normalize(String path) {
+        String res = base + (path.startsWith("/") ? path.substring(1) : path);
+        res = res.replace("/./", "/");
+        int pos;
+        while ((pos = res.indexOf("/../")) >= 0) {
+            final int before = res.lastIndexOf('/', pos - 1);
+            if (before < 0) {
+                throw new IllegalArgumentException("Invalid path '" + path + "'");
+            }
+            res = res.substring(0, before) + res.substring(pos + 3);
+        }
+        return res;
     }
 
     @Override

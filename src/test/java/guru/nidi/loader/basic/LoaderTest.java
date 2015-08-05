@@ -74,7 +74,17 @@ public class LoaderTest {
 
     @Test(expected = Loader.ResourceNotFoundException.class)
     public void classPathNok() {
-        new ClassPathLoader("guru/nidi/raml/loader").fetchResource("bla", -1);
+        new ClassPathLoader("guru/nidi/loader").fetchResource("bla", -1);
+    }
+
+    @Test
+    public void classPathWithDotDot() {
+        new ClassPathLoader("guru/nidi/loader/sub").fetchResource("/../simple.raml", -1);
+    }
+
+    @Test
+    public void classPathWithDot() {
+        new ClassPathLoader("guru/nidi/loader").fetchResource("./simple.raml", -1);
     }
 
     @Test
@@ -106,7 +116,6 @@ public class LoaderTest {
         assertStreamStart(in, "<!DOCTYPE html>");
     }
 
-
     @Test(expected = Loader.ResourceNotFoundException.class)
     public void urlNok() {
         new UrlLoader("http://en.wikipedia.org").fetchResource("dfkjsdfhfs", -1);
@@ -122,7 +131,6 @@ public class LoaderTest {
     public void loadFileWithUnfindableReference() {
         new FileLoader(new File("src/test/resources/guru/nidi/ramltester/sub")).fetchResource("simple.raml", -1);
     }
-
 
     @Test
     public void publicGithub() throws IOException {
