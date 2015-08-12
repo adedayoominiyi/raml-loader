@@ -87,7 +87,7 @@ public class LoaderTest {
         new ClassPathLoader("guru/../guru/nidi/loader").fetchResource("simple.raml", -1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = Loader.ResourceNotFoundException.class)
     public void classPathWithSecondDotDot2() {
         new ClassPathLoader("/guru/../guru/nidi/loader").fetchResource("simple.raml", -1);
     }
