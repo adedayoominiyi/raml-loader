@@ -16,7 +16,6 @@
 package guru.nidi.loader.basic;
 
 import guru.nidi.loader.Loader;
-import guru.nidi.loader.url.GithubLoader;
 import guru.nidi.loader.url.UrlLoader;
 import org.junit.Test;
 
@@ -24,7 +23,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.Date;
 
-import static guru.nidi.loader.util.TestUtils.getEnv;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -153,29 +151,6 @@ public class LoaderTest {
     }
 
     @Test
-    public void publicGithub() throws IOException {
-        final InputStream in = new GithubLoader("nidi3/raml-loader").fetchResource("src/test/resources/guru/nidi/loader/simple.raml", -1);
-        assertStreamStart(in, "#%RAML 0.8");
-    }
-
-    @Test
-    public void publicGithubNotModified() throws IOException {
-        assertNull(new GithubLoader("nidi3/raml-tester").fetchResource("src/test/resources/guru/nidi/ramltester/simple.raml", new Date(130, 0, 1).getTime()));
-    }
-
-    @Test
-    public void publicGithubModified() throws IOException {
-        final InputStream in = new GithubLoader("nidi3/raml-tester").fetchResource("src/test/resources/guru/nidi/ramltester/simple.raml", new Date(100, 0, 1).getTime());
-        assertStreamStart(in, "#%RAML 0.8");
-    }
-
-    @Test
-    public void privateGithub() throws IOException {
-        final InputStream in = new GithubLoader(getEnv("GITHUB_TOKEN"), "nidi3/blog").fetchResource("README.md", -1);
-        assertStreamStart(in, "blog");
-    }
-
-    @Test
     public void loadFileWithSecondLoader() throws IOException {
         final InputStream in = new CompositeLoader(
                 new FileLoader(new File("src/test/resources/guru/nidi/loader/sub")),
@@ -201,7 +176,7 @@ public class LoaderTest {
         assertStreamStart(new ByteArrayInputStream(tli.data), "#%RAML 0.8");
     }
 
-    private void assertStreamStart(InputStream in, String s) throws IOException {
+    static void assertStreamStart(InputStream in, String s) throws IOException {
         try (final BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             assertThat(reader.readLine(), equalTo(s));
         }
