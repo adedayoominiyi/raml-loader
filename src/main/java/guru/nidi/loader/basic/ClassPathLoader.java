@@ -69,12 +69,16 @@ public class ClassPathLoader implements Loader {
         String res = base + (path.startsWith("/") ? path.substring(1) : path);
         res = res.replace("/./", "/");
         int pos;
-        while ((pos = res.indexOf("/../")) >= 0) {
-            final int before = res.lastIndexOf('/', pos - 1);
-            if (before < 0) {
-                throw new IllegalArgumentException("Invalid path '" + path + "'");
+        while ((pos = res.indexOf("../")) >= 0) {
+            final int before = res.lastIndexOf('/', pos - 2);
+            if (before >= 0) {
+                res = res.substring(0, before) + res.substring(pos + 2);
+            } else {
+                if (pos <= 1) {
+                    throw new IllegalArgumentException("Invalid path '" + path + "'");
+                }
+                res = res.substring(pos + 3);
             }
-            res = res.substring(0, before) + res.substring(pos + 3);
         }
         return res;
     }

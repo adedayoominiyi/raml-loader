@@ -83,6 +83,26 @@ public class LoaderTest {
     }
 
     @Test
+    public void classPathWithSecondDotDot1() {
+        new ClassPathLoader("guru/../guru/nidi/loader").fetchResource("simple.raml", -1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void classPathWithSecondDotDot2() {
+        new ClassPathLoader("/guru/../guru/nidi/loader").fetchResource("simple.raml", -1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void classPathWithStartingDotDot1() {
+        new ClassPathLoader("/../nidi/loader").fetchResource("simple.raml", -1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void classPathWithStartingDotDot2() {
+        new ClassPathLoader("../nidi/loader").fetchResource("simple.raml", -1);
+    }
+
+    @Test
     public void classPathWithDot() {
         new ClassPathLoader("guru/nidi/loader").fetchResource("./simple.raml", -1);
     }
