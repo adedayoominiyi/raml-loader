@@ -75,16 +75,6 @@ public class UriLoaderTest extends ServerTest {
     }
 
     @Test
-    public void publicGithub() {
-        assertNotNull(new UriLoader().fetchResource("github://nidi3/raml-loader/src/test/resources/guru/nidi/loader/simple.raml", -1));
-    }
-
-    @Test
-    public void privateGithub() throws IOException {
-        assertNotNull(new UriLoader().fetchResource(TestUtils.getEnv("GITHUB_TOKEN") + "@github://nidi3/blog/simple.raml", -1));
-    }
-
-    @Test
     @Ignore
     public void apiPortal() {
         assertNotNull(new UriLoader().fetchResource(TestUtils.getEnv("API_PORTAL_USER") + ":" + TestUtils.getEnv("API_PORTAL_PASS") + "@apiportal://test.raml", -1));

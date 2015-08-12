@@ -16,6 +16,7 @@
 package guru.nidi.loader.basic;
 
 import guru.nidi.loader.url.GithubLoader;
+import guru.nidi.loader.util.TestUtils;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,6 +27,7 @@ import java.util.Date;
 
 import static guru.nidi.loader.basic.LoaderTest.assertStreamStart;
 import static guru.nidi.loader.util.TestUtils.getEnv;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeTrue;
 
@@ -61,4 +63,15 @@ public class GithubTest {
         final InputStream in = new GithubLoader(getEnv("GITHUB_TOKEN"), "nidi3/blog").fetchResource("README.md", -1);
         assertStreamStart(in, "blog");
     }
+
+    @Test
+    public void publicGithubWithUri() {
+        assertNotNull(new UriLoader().fetchResource("github://nidi3/raml-loader/src/test/resources/guru/nidi/loader/simple.raml", -1));
+    }
+
+    @Test
+    public void privateGithubWithUri() throws IOException {
+        assertNotNull(new UriLoader().fetchResource(TestUtils.getEnv("GITHUB_TOKEN") + "@github://nidi3/blog/simple.raml", -1));
+    }
+
 }
