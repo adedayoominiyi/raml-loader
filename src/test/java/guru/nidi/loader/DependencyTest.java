@@ -24,10 +24,10 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static jdepend.framework.DependencyMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  *
@@ -87,27 +87,18 @@ public class DependencyTest {
 
         url.dependsUpon(base);
 
-        assertTrue("Dependency mismatch", depend.dependencyMatch(constraint));
+        assertThat(depend, matches(constraint));
     }
 
     @Test
     public void noCircularDependencies() throws IOException {
-        assertFalse("Cyclic dependencies", depend.containsCycles());
+        assertThat(depend, hasNoCycles());
     }
 
     @Test
     public void maxDistance() throws IOException {
-        @SuppressWarnings("unchecked")
-        final Collection<JavaPackage> packages = depend.getPackages();
-
-        System.out.println("Name                                      abst  inst  dist");
-        System.out.println("----------------------------------------------------------");
-        for (JavaPackage pack : packages) {
-            if (pack.getName().startsWith("guru.")) {
-                System.out.printf("%-40s: %-1.2f  %-1.2f  %-1.2f%n", pack.getName(), pack.abstractness(), pack.instability(), pack.distance());
-                assertEquals("Distance exceeded: " + pack.getName(), 0, pack.distance(), .50f);
-            }
-        }
+        System.out.println(distances(depend, "guru."));
+        assertThat(depend, hasMaxDistance("guru.", .5));
     }
 
 }
