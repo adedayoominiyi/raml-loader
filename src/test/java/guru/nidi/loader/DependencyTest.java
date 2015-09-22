@@ -38,7 +38,8 @@ public class DependencyTest {
     @BeforeClass
     public static void init() throws IOException {
         final List<String> ramlParserPackages = Arrays.asList("org.raml.model", "org.raml.parser");
-        depend = new JDepend(PackageFilter.empty().excluding("org.", "java.", "com.", "javax.", "org.raml.parser.").including(ramlParserPackages));
+        depend = new JDepend(PackageFilter.all().excluding("org.raml.parser.")
+                .including(ramlParserPackages).including("guru.nidi.loader").excludingRest());
         depend.addDirectory("target/classes");
         for (final String rpp : ramlParserPackages) {
             depend.addPackage(rpp);
