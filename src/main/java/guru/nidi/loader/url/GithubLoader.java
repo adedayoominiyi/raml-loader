@@ -31,15 +31,7 @@ import java.util.Map;
 public class GithubLoader extends UrlLoader {
     private final String resourceBase;
 
-    public GithubLoader(String user, String project) {
-        this(null, user, project, null, null);
-    }
-
-    public GithubLoader(String token, String user, String project) {
-        this(token, user, project, null, null);
-    }
-
-    public GithubLoader(final String token, String user, String project, String resourceBase, CloseableHttpClient httpClient) {
+    private GithubLoader(final String token, String user, String project, String resourceBase, CloseableHttpClient httpClient) {
         super("https://api.github.com/repos/" + user + "/" + project + "/contents", new SimpleUrlFetcher() {
             @Override
             protected HttpGet postProcessGet(HttpGet get) {
@@ -50,6 +42,22 @@ public class GithubLoader extends UrlLoader {
             }
         }, httpClient);
         this.resourceBase = (resourceBase == null || resourceBase.length() == 0) ? "" : (resourceBase + "/");
+    }
+
+    public static GithubLoader forPublic(String user, String project) {
+        return new GithubLoader(null, user, project, null, null);
+    }
+
+    public static GithubLoader forPublic(String user, String project, String resourceBase) {
+        return new GithubLoader(null, user, project, resourceBase, null);
+    }
+
+    public static GithubLoader forPrivate(String token, String user, String project) {
+        return new GithubLoader(token, user, project, null, null);
+    }
+
+    public static GithubLoader forPrivate(String token, String user, String project, String resourceBase) {
+        return new GithubLoader(token, user, project, resourceBase, null);
     }
 
     @Override

@@ -42,24 +42,30 @@ public class GithubTest {
 
     @Test
     public void publicGithub() throws IOException {
-        final InputStream in = new GithubLoader("nidi3", "raml-loader").fetchResource("src/test/resources/guru/nidi/loader/simple.raml", -1);
+        final InputStream in = GithubLoader.forPublic("nidi3", "raml-loader").fetchResource("src/test/resources/guru/nidi/loader/simple.raml", -1);
+        assertStreamStart(in, "#%RAML 0.8");
+    }
+
+    @Test
+    public void publicGithubWithBasePath() throws IOException {
+        final InputStream in = GithubLoader.forPublic("nidi3", "raml-loader", "src/test/resources").fetchResource("guru/nidi/loader/simple.raml", -1);
         assertStreamStart(in, "#%RAML 0.8");
     }
 
     @Test
     public void publicGithubNotModified() throws IOException {
-        assertNull(new GithubLoader("nidi3", "raml-tester").fetchResource("src/test/resources/guru/nidi/ramltester/simple.raml", new Date(130, 0, 1).getTime()));
+        assertNull(GithubLoader.forPublic("nidi3", "raml-tester").fetchResource("src/test/resources/guru/nidi/ramltester/simple.raml", new Date(130, 0, 1).getTime()));
     }
 
     @Test
     public void publicGithubModified() throws IOException {
-        final InputStream in = new GithubLoader("nidi3", "raml-tester").fetchResource("src/test/resources/guru/nidi/ramltester/simple.raml", new Date(100, 0, 1).getTime());
+        final InputStream in = GithubLoader.forPublic("nidi3", "raml-tester").fetchResource("src/test/resources/guru/nidi/ramltester/simple.raml", new Date(100, 0, 1).getTime());
         assertStreamStart(in, "#%RAML 0.8");
     }
 
     @Test
     public void privateGithub() throws IOException {
-        final InputStream in = new GithubLoader(getEnv("GITHUB_TOKEN"), "nidi3", "blog").fetchResource("README.md", -1);
+        final InputStream in = GithubLoader.forPrivate(getEnv("GITHUB_TOKEN"), "nidi3", "blog").fetchResource("README.md", -1);
         assertStreamStart(in, "blog");
     }
 
