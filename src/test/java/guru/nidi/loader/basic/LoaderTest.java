@@ -117,7 +117,7 @@ public class LoaderTest {
     public void fileNotModified() throws IOException {
         final URL resource = Thread.currentThread().getContextClassLoader().getResource("guru/nidi/loader");
         assertEquals("file", resource.getProtocol());
-        final long mod = new File(resource.getPath()).lastModified();
+        final long mod = new File(resource.getPath(), "simple.raml").lastModified();
         assertNull(new FileLoader(new File(resource.getPath())).fetchResource("simple.raml", mod + 1));
     }
 

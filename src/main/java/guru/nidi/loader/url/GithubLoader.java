@@ -31,8 +31,16 @@ import java.util.Map;
 public class GithubLoader extends UrlLoader {
     private final String resourceBase;
 
-    public GithubLoader(final String token, String project, String resourceBase, CloseableHttpClient httpClient) {
-        super("https://api.github.com/repos/" + project + "/contents", new SimpleUrlFetcher() {
+    public GithubLoader(String user, String project) {
+        this(null, user, project, null, null);
+    }
+
+    public GithubLoader(String token, String user, String project) {
+        this(token, user, project, null, null);
+    }
+
+    public GithubLoader(final String token, String user, String project, String resourceBase, CloseableHttpClient httpClient) {
+        super("https://api.github.com/repos/" + user + "/" + project + "/contents", new SimpleUrlFetcher() {
             @Override
             protected HttpGet postProcessGet(HttpGet get) {
                 if (token != null) {
@@ -44,18 +52,9 @@ public class GithubLoader extends UrlLoader {
         this.resourceBase = (resourceBase == null || resourceBase.length() == 0) ? "" : (resourceBase + "/");
     }
 
-    public GithubLoader(String token, String project) {
-        this(token, project, null, null);
-    }
-
-    public GithubLoader(String project) {
-        this(null, project, null, null);
-    }
-
     @Override
     public InputStream fetchResource(String name, long ifModifiedSince) {
-        try {
-            final InputStream raw = fetcher.fetchFromUrl(client, base, resourceBase + name, ifModifiedSince);
+        try (final InputStream raw = fetcher.fetchFromUrl(client, base, resourceBase + name, ifModifiedSince)) {
             if (raw == null) {
                 return null;
             }
@@ -77,15 +76,16 @@ public class GithubLoader extends UrlLoader {
         public Loader getLoader(String base, String username, String password) {
             final int firstSlash = base.indexOf('/');
             final int secondSlash = base.indexOf('/', firstSlash + 1);
+            final String user = base.substring(0, firstSlash);
             final String project, resourceBase;
             if (secondSlash > 0) {
-                project = base.substring(0, secondSlash);
+                project = base.substring(firstSlash + 1, secondSlash);
                 resourceBase = base.substring(secondSlash + 1);
             } else {
-                project = base;
+                project = base.substring(firstSlash + 1);
                 resourceBase = null;
             }
-            return new GithubLoader(username, project, resourceBase, null);
+            return new GithubLoader(username, user, project, resourceBase, null);
         }
     }
 }

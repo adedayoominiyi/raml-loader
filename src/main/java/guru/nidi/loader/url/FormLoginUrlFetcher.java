@@ -59,11 +59,12 @@ public class FormLoginUrlFetcher extends SimpleUrlFetcher {
             params.add(new BasicNameValuePair(passwordField, password));
             postProcessLoginParameters(params);
             login.setEntity(new UrlEncodedFormEntity(params));
-            final CloseableHttpResponse getResult = client.execute(postProcessLogin(login));
-            if (getResult.getStatusLine().getStatusCode() != HttpStatus.SC_MOVED_TEMPORARILY) {
-                throw new Loader.ResourceNotFoundException(name, "Could not login: " + getResult.getStatusLine().toString());
+            try(final CloseableHttpResponse getResult = client.execute(postProcessLogin(login))) {
+                if (getResult.getStatusLine().getStatusCode() != HttpStatus.SC_MOVED_TEMPORARILY) {
+                    throw new Loader.ResourceNotFoundException(name, "Could not login: " + getResult.getStatusLine().toString());
+                }
+                EntityUtils.consume(getResult.getEntity());
             }
-            EntityUtils.consume(getResult.getEntity());
             return super.fetchFromUrl(client, base + "/" + loadPath, name, ifModifiedSince);
         } catch (IOException e) {
             throw new Loader.ResourceNotFoundException(name, e);

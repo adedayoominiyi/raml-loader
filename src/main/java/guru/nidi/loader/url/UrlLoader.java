@@ -52,9 +52,7 @@ public class UrlLoader implements Loader {
     @Override
     public InputStream fetchResource(String name, long ifModifiedSince) {
         try {
-            // remove AutoCloseInputStream as soon as
-            // https://github.com/raml-org/raml-java-parser/issues/72 is fixed
-            return new AutoCloseInputStream(fetcher.fetchFromUrl(client, base, name, ifModifiedSince));
+            return fetcher.fetchFromUrl(client, base, name, ifModifiedSince);
         } catch (IOException e) {
             throw new ResourceNotFoundException(name, e);
         }

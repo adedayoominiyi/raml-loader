@@ -15,6 +15,7 @@
  */
 package guru.nidi.loader.url;
 
+import org.apache.commons.io.input.AutoCloseInputStream;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -43,7 +44,9 @@ public class SimpleUrlFetcher implements UrlFetcher {
         final CloseableHttpResponse getResult = client.execute(get);
         switch (getResult.getStatusLine().getStatusCode()) {
             case HttpStatus.SC_OK:
-                return getResult.getEntity().getContent();
+                // remove AutoCloseInputStream as soon as
+                // https://github.com/raml-org/raml-java-parser/issues/72 is fixed
+                return new AutoCloseInputStream(getResult.getEntity().getContent());
             case HttpStatus.SC_NOT_MODIFIED:
                 EntityUtils.consume(getResult.getEntity());
                 return null;
