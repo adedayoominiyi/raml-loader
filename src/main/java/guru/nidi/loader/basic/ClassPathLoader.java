@@ -17,6 +17,7 @@ package guru.nidi.loader.basic;
 
 import guru.nidi.loader.Loader;
 import guru.nidi.loader.LoaderFactory;
+import guru.nidi.loader.ResourceNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +36,11 @@ public class ClassPathLoader implements Loader {
     }
 
     public ClassPathLoader(String base) {
-        this.base = (base == null || base.length() == 0) ? "" : base.endsWith("/") ? base : base + "/";
+        if (base == null || base.length() == 0) {
+            this.base = "";
+        } else {
+            this.base = base.endsWith("/") ? base : base + "/";
+        }
     }
 
     @Override

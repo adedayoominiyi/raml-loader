@@ -18,6 +18,7 @@ package guru.nidi.loader.repository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.nidi.loader.Loader;
+import guru.nidi.loader.ResourceNotFoundException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class RepositoryLoader implements Loader {
         if (response == null) {
             response = load();
         }
-        final String name = resourceName != null ? resourceName : defaultResourceName;
+        final String name = resourceName == null ? defaultResourceName : resourceName;
         final RepositoryEntry entry = findEntry(name);
         if (entry == null) {
             throw new ResourceNotFoundException(name);

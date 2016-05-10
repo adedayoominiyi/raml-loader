@@ -16,8 +16,9 @@
 package guru.nidi.loader.use.raml;
 
 import guru.nidi.loader.Loader;
-import org.raml.model.Raml;
-import org.raml.parser.visitor.RamlDocumentBuilder;
+import guru.nidi.loader.LoadingException;
+import org.raml.v2.api.RamlModelBuilder;
+import org.raml.v2.api.RamlModelResult;
 
 import java.io.*;
 
@@ -35,7 +36,7 @@ public class RamlCache {
     }
 
     //TODO save all included ramls of a raml. when any of them changes, reparse!
-    public Raml loadRaml(String name) {
+    public RamlModelResult loadRaml(String name) {
         final File file = new File(CACHE_DIR, escaped(loader.config()) + "-" + escaped(simpleName(name)) + ".braml");
         if (!file.exists()) {
             return parseAndSave(loader, name, file);
@@ -58,13 +59,13 @@ public class RamlCache {
         return name.substring(user + 1, suffix < 0 ? name.length() : suffix);
     }
 
-    private Raml parseAndSave(Loader loader, String name, File file) {
-        final Raml raml = new RamlDocumentBuilder(new LoaderRamlResourceLoader(loader)).build(name);
+    private RamlModelResult parseAndSave(Loader loader, String name, File file) {
+        final RamlModelResult raml = new RamlModelBuilder(new LoaderRamlResourceLoader(loader)).buildApi(name);
         save(raml, file);
         return raml;
     }
 
-    private void save(Raml raml, File file) {
+    private void save(RamlModelResult raml, File file) {
         try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(raml);
         } catch (IOException e) {
@@ -72,9 +73,9 @@ public class RamlCache {
         }
     }
 
-    private Raml load(File file) throws IOException, ClassNotFoundException {
+    private RamlModelResult load(File file) throws IOException, ClassNotFoundException {
         try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            return (Raml) ois.readObject();
+            return (RamlModelResult) ois.readObject();
         }
     }
 
@@ -99,7 +100,7 @@ public class RamlCache {
             }
             return baos.toByteArray();
         } catch (IOException e) {
-            throw new RuntimeException("Could not read resource '" + name + "'", e);
+            throw new LoadingException("Could not read resource '" + name + "'", e);
         }
     }
 

@@ -5,7 +5,7 @@
     <parent>
         <groupId>guru.nidi</groupId>
         <artifactId>guru-nidi-parent-pom</artifactId>
-        <version>1.0.5</version>
+        <version>1.0.6</version>
     </parent>
 
     <groupId>guru.nidi.raml</groupId>
@@ -33,11 +33,22 @@
             <plugin>
                 <groupId>guru.nidi.maven.plugins</groupId>
                 <artifactId>tools-maven-plugin</artifactId>
-                <version>1.0.17</version>
+                <version>1.0.19</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>backport7to6</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>guru.nidi</groupId>
+                <artifactId>code-assert-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>assert</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -49,23 +60,8 @@
         <!--only for use with guru.nidi.loader.use.raml package-->
         <dependency>
             <groupId>org.raml</groupId>
-            <artifactId>raml-parser</artifactId>
-            <version>0.8.11</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>raml-parser-2</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -103,8 +99,7 @@
 
         <dependency>
             <groupId>guru.nidi</groupId>
-            <artifactId>jdepend</artifactId>
-            <version>2.9.4</version>
+            <artifactId>code-assert</artifactId>
         </dependency>
 
         <dependency>

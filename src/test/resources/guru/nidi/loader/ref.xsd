@@ -1,0 +1,4 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="myNS"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="string.xsd" />
+</xs:schema>

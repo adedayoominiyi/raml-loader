@@ -37,6 +37,7 @@ public abstract class ServerTest {
     private final static JarScanner NO_SCAN = new JarScanner() {
         @Override
         public void scan(ServletContext context, ClassLoader classloader, JarScannerCallback callback, Set<String> jarsToSkip) {
+            //no scan
         }
     };
 
@@ -50,14 +51,14 @@ public abstract class ServerTest {
             tomcat = new Tomcat();
             tomcat.setPort(port());
             tomcat.setBaseDir(".");
-            Context ctx = tomcat.addWebapp("/", "src/test");
+            final Context ctx = tomcat.addWebapp("/", "src/test");
             ctx.setJarScanner(NO_SCAN);
             ((Host) ctx.getParent()).setAppBase("");
 
             init(ctx);
 
             tomcat.start();
-            Server server = tomcat.getServer();
+            final Server server = tomcat.getServer();
             server.start();
         }
     }
@@ -65,6 +66,7 @@ public abstract class ServerTest {
     protected abstract int port();
 
     protected void init(Context ctx) {
+        //hook method
     }
 
     protected String url(String path) {
