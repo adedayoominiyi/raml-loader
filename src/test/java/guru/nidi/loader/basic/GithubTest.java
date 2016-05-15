@@ -18,6 +18,7 @@ package guru.nidi.loader.basic;
 import guru.nidi.loader.url.GithubLoader;
 import guru.nidi.loader.util.TestUtils;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;

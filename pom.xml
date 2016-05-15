@@ -31,6 +31,18 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>guru.nidi</groupId>
+                <artifactId>code-assert-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>assert</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>guru.nidi.maven.plugins</groupId>
                 <artifactId>tools-maven-plugin</artifactId>
                 <version>1.0.19</version>
@@ -38,17 +50,6 @@
                     <execution>
                         <goals>
                             <goal>backport7to6</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>guru.nidi</groupId>
-                <artifactId>code-assert-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>assert</goal>
                         </goals>
                     </execution>
                 </executions>
