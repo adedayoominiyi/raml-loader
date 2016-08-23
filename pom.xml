@@ -35,7 +35,6 @@
                 <artifactId>code-assert-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>test</phase>
                         <goals>
                             <goal>assert</goal>
                         </goals>
@@ -62,7 +61,7 @@
         <dependency>
             <groupId>org.raml</groupId>
             <artifactId>raml-parser-2</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
