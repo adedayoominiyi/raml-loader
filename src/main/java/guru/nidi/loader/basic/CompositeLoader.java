@@ -16,6 +16,7 @@
 package guru.nidi.loader.basic;
 
 import guru.nidi.loader.Loader;
+import guru.nidi.loader.ResourceNotFoundException;
 
 import java.io.InputStream;
 
@@ -43,10 +44,10 @@ public class CompositeLoader implements Loader {
 
     @Override
     public String config() {
-        String s = "composite";
+        final StringBuilder s = new StringBuilder("composite");
         for (final Loader loader : loaders) {
-            s += "-" + loader.config();
+            s.append('-').append(loader.config());
         }
-        return s;
+        return s.toString();
     }
 }

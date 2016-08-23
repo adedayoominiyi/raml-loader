@@ -21,41 +21,15 @@ import java.io.InputStream;
  *
  */
 public interface Loader {
-    class ResourceNotFoundException extends RuntimeException {
-        private final String resourceName;
-
-        public ResourceNotFoundException(String resourceName, Throwable cause) {
-            super(cause);
-            this.resourceName = resourceName;
-        }
-
-        public ResourceNotFoundException(String resourceName, String message) {
-            super(message);
-            this.resourceName = resourceName;
-        }
-
-        public ResourceNotFoundException(String resourceName) {
-            this.resourceName = resourceName;
-        }
-
-        public String getResourceName() {
-            return resourceName;
-        }
-
-        @Override
-        public String getMessage() {
-            return "Resource '" + resourceName + "' not found: " + super.getMessage();
-        }
-    }
 
     /**
      * Fetch the resource with the given name.
      * If it has NOT been modified since the given point in time, null should be returned.
      *
-     * @param name
-     * @param ifModifiedSince
-     * @return
-     * @throws ResourceNotFoundException
+     * @param name Resource to be loaded
+     * @param ifModifiedSince -1 or max age of resource in millis since 1.1.1970
+     * @return Stream to the source or null
+     * @throws ResourceNotFoundException if resource has not been found
      */
     InputStream fetchResource(String name, long ifModifiedSince);
 

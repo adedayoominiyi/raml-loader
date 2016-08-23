@@ -16,10 +16,14 @@
 package guru.nidi.loader.use.xml;
 
 import guru.nidi.loader.Loader;
+import guru.nidi.loader.LoadingException;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
+
+import javax.xml.XMLConstants;
+import javax.xml.validation.SchemaFactory;
 
 /**
  *
@@ -30,8 +34,8 @@ public class LoaderLSResourceResolver implements LSResourceResolver {
     static {
         try {
             DOM_IMPLEMENTATION_LS = (DOMImplementationLS) DOMImplementationRegistry.newInstance().getDOMImplementation("LS");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("Could not initialize DOM implementation", e);
+        } catch (Exception e) {
+            throw new LoadingException("Could not initialize DOM implementation", e);
         }
     }
 
@@ -39,6 +43,19 @@ public class LoaderLSResourceResolver implements LSResourceResolver {
 
     public LoaderLSResourceResolver(Loader loader) {
         this.loader = loader;
+    }
+
+    public static SchemaFactory createXmlSchemaFactory(Loader loader) {
+        return createSchemaFactory(loader, XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    }
+    public static SchemaFactory createRelaxNgSchemaFactory(Loader loader) {
+        return createSchemaFactory(loader, XMLConstants.RELAXNG_NS_URI);
+    }
+
+    public static SchemaFactory createSchemaFactory(Loader loader, String schemaLanguage) {
+        final SchemaFactory schemaFactory = SchemaFactory.newInstance(schemaLanguage);
+        schemaFactory.setResourceResolver(new LoaderLSResourceResolver(loader));
+        return schemaFactory;
     }
 
     @Override

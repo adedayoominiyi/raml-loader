@@ -18,6 +18,7 @@ package guru.nidi.loader.url;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.nidi.loader.Loader;
 import guru.nidi.loader.LoaderFactory;
+import guru.nidi.loader.ResourceNotFoundException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -31,7 +32,7 @@ import java.util.Map;
 public class GithubLoader extends UrlLoader {
     private final String resourceBase;
 
-    private GithubLoader(final String token, String user, String project, String resourceBase, CloseableHttpClient httpClient) {
+    GithubLoader(final String token, String user, String project, String resourceBase, CloseableHttpClient httpClient) {
         super("https://api.github.com/repos/" + user + "/" + project + "/contents", new SimpleUrlFetcher() {
             @Override
             protected HttpGet postProcessGet(HttpGet get) {
@@ -70,7 +71,7 @@ public class GithubLoader extends UrlLoader {
             final Map<String, String> desc = new ObjectMapper().readValue(raw, Map.class);
             return fetcher.fetchFromUrl(client, desc.get("download_url"), "", ifModifiedSince);
         } catch (IOException e) {
-            throw new Loader.ResourceNotFoundException(resourceBase + name, e);
+            throw new ResourceNotFoundException(resourceBase + name, e);
         }
     }
 

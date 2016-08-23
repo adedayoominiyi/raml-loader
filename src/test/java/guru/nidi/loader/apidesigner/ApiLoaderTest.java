@@ -15,7 +15,7 @@
  */
 package guru.nidi.loader.apidesigner;
 
-import guru.nidi.loader.Loader;
+import guru.nidi.loader.ResourceNotFoundException;
 import guru.nidi.loader.use.raml.RamlLoad;
 import guru.nidi.loader.util.TestUtils;
 import org.junit.Before;
@@ -43,12 +43,12 @@ public class ApiLoaderTest {
         assertNotNull(new RamlLoad(loader).load("test.raml"));
     }
 
-    @Test(expected = Loader.ResourceNotFoundException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void fromApiPortalUnknownFile() throws IOException {
         new RamlLoad(loader).load("huhuhuhuhu.raml");
     }
 
-    @Test(expected = Loader.ResourceNotFoundException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void fromApiPortalUnknownUser() throws IOException {
         new RamlLoad(new ApiLoader("wwwwww", "blalbulbi")).load("test.raml");
     }

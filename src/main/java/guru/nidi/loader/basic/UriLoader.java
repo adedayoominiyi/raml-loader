@@ -58,8 +58,8 @@ public class UriLoader implements Loader {
 
     @Override
     public InputStream fetchResource(String name, long ifModifiedSince) {
-        name = normalizeResourceName(name);
-        final Matcher matcher = ABSOLUTE_URI_PATTERN.matcher(name);
+        final String normalized = normalizeResourceName(name);
+        final Matcher matcher = ABSOLUTE_URI_PATTERN.matcher(normalized);
         if (matcher.matches()) {
             String path = matcher.group(GROUP_PATH);
             String res = "";
@@ -74,7 +74,7 @@ public class UriLoader implements Loader {
         if (relativeLoader == null) {
             throw new IllegalArgumentException("Expected absolute uri '[username:password@]protocol://base[/file]', but got '" + name + "'");
         }
-        return relativeLoader.fetchResource(name, ifModifiedSince);
+        return relativeLoader.fetchResource(normalized, ifModifiedSince);
     }
 
     @Override

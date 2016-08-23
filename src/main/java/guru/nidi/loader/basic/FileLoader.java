@@ -17,6 +17,7 @@ package guru.nidi.loader.basic;
 
 import guru.nidi.loader.Loader;
 import guru.nidi.loader.LoaderFactory;
+import guru.nidi.loader.ResourceNotFoundException;
 
 import java.io.File;
 import java.io.FileInputStream;

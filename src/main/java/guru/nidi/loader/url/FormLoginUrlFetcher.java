@@ -15,7 +15,7 @@
  */
 package guru.nidi.loader.url;
 
-import guru.nidi.loader.Loader;
+import guru.nidi.loader.ResourceNotFoundException;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -61,17 +61,18 @@ public class FormLoginUrlFetcher extends SimpleUrlFetcher {
             login.setEntity(new UrlEncodedFormEntity(params));
             try(final CloseableHttpResponse getResult = client.execute(postProcessLogin(login))) {
                 if (getResult.getStatusLine().getStatusCode() != HttpStatus.SC_MOVED_TEMPORARILY) {
-                    throw new Loader.ResourceNotFoundException(name, "Could not login: " + getResult.getStatusLine().toString());
+                    throw new ResourceNotFoundException(name, "Could not login: " + getResult.getStatusLine().toString());
                 }
                 EntityUtils.consume(getResult.getEntity());
             }
             return super.fetchFromUrl(client, base + "/" + loadPath, name, ifModifiedSince);
         } catch (IOException e) {
-            throw new Loader.ResourceNotFoundException(name, e);
+            throw new ResourceNotFoundException(name, e);
         }
     }
 
     protected void postProcessLoginParameters(List<NameValuePair> parameters) {
+        //hook method
     }
 
     protected HttpPost postProcessLogin(HttpPost login) {

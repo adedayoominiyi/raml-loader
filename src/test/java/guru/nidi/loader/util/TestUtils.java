@@ -15,13 +15,22 @@
  */
 package guru.nidi.loader.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 
 /**
  *
  */
-public class TestUtils {
+public final class TestUtils {
+    private static final String RAML_0_8 = "#%RAML 0.8";
+
     private TestUtils() {
     }
 
@@ -31,4 +40,13 @@ public class TestUtils {
         return env;
     }
 
+    public static void assertStreamStart(InputStream in, String s) throws IOException {
+        try (final BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"))) {
+            assertThat(reader.readLine(), equalTo(s));
+        }
+    }
+
+    public static void assertRamlStart(InputStream in) throws IOException {
+        assertStreamStart(in, RAML_0_8);
+    }
 }

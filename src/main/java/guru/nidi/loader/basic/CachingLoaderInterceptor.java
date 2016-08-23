@@ -15,6 +15,8 @@
  */
 package guru.nidi.loader.basic;
 
+import guru.nidi.loader.LoadingException;
+
 import java.io.*;
 
 /**
@@ -34,7 +36,7 @@ public abstract class CachingLoaderInterceptor implements LoaderInterceptor {
             processLoaded(name, data);
             return new ByteArrayInputStream(data);
         } catch (IOException e) {
-            throw new RuntimeException("Problem reading from input '" + name + "'", e);
+            throw new LoadingException("Problem reading from input '" + name + "'", e);
         }
     }
 

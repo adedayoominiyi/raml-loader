@@ -16,8 +16,8 @@
 package guru.nidi.loader.use.raml;
 
 import guru.nidi.loader.Loader;
-import org.raml.model.Raml;
-import org.raml.parser.visitor.RamlDocumentBuilder;
+import org.raml.v2.api.RamlModelBuilder;
+import org.raml.v2.api.RamlModelResult;
 
 /**
  *
@@ -35,9 +35,9 @@ public class RamlLoad {
         this.caching = caching;
     }
 
-    public Raml load(String name) {
+    public RamlModelResult load(String name) {
         return caching
                 ? new RamlCache(loader).loadRaml(name)
-                : new RamlDocumentBuilder(new LoaderRamlResourceLoader(loader)).build(name);
+                : new RamlModelBuilder(new LoaderRamlResourceLoader(loader)).buildApi(name);
     }
 }

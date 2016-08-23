@@ -13,25 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package guru.nidi.loader.use.raml;
-
-import guru.nidi.loader.Loader;
-import org.raml.v2.api.loader.ResourceLoader;
-
-import java.io.InputStream;
+package guru.nidi.loader;
 
 /**
  *
  */
-public class LoaderRamlResourceLoader implements ResourceLoader {
-    private final Loader delegate;
-
-    public LoaderRamlResourceLoader(Loader delegate) {
-        this.delegate = delegate;
-    }
-
-    @Override
-    public InputStream fetchResource(String resourceName) {
-        return delegate.fetchResource(resourceName, -1);
+public class LoadingException extends RuntimeException {
+    public LoadingException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

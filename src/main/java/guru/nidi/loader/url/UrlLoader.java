@@ -17,7 +17,7 @@ package guru.nidi.loader.url;
 
 import guru.nidi.loader.Loader;
 import guru.nidi.loader.LoaderFactory;
-import org.apache.commons.io.input.AutoCloseInputStream;
+import guru.nidi.loader.ResourceNotFoundException;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
