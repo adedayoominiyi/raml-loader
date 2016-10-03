@@ -30,7 +30,7 @@ public class LoaderLSResourceResolver implements LSResourceResolver {
     static {
         try {
             DOM_IMPLEMENTATION_LS = (DOMImplementationLS) DOMImplementationRegistry.newInstance().getDOMImplementation("LS");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Could not initialize DOM implementation", e);
         }
     }
