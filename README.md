@@ -3,7 +3,7 @@ Load RAML files using different protocols like
 
 - Classpath
 - File system
-- Using HTTP
+- HTTP
 - Github
 - API portal
 - API designer
