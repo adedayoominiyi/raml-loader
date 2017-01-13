@@ -33,8 +33,11 @@ public class SimpleUrlFetcher implements UrlFetcher {
 
     @Override
     public InputStream fetchFromUrl(CloseableHttpClient client, String base, String name, long ifModifiedSince) throws IOException {
+        final int pos = base.indexOf('?');
+        final String path = pos < 0 ? base : base.substring(0, pos);
+        final String query = pos < 0 ? "" : base.substring(pos);
         final String suffix = (name == null || name.length() == 0) ? "" : ("/" + encodeUrl(name));
-        final HttpGet get = postProcessGet(new HttpGet(base + suffix));
+        final HttpGet get = postProcessGet(new HttpGet(path + suffix + query));
         if (ifModifiedSince > 0) {
             get.addHeader("if-modified-since", httpDate(ifModifiedSince));
         }

@@ -18,7 +18,6 @@ package guru.nidi.loader.basic;
 import guru.nidi.loader.url.GithubLoader;
 import guru.nidi.loader.util.TestUtils;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -45,8 +44,14 @@ public class GithubTest {
     }
 
     @Test
+    public void publicGithubWithRef() throws IOException {
+        final InputStream in = GithubLoader.forPublic(USER, "raml-loader").ref("raml-loader-0.8.1").fetchResource("src/test/resources/guru/nidi/loader/simple.raml", -1);
+        assertRamlStart(in);
+    }
+
+    @Test
     public void publicGithubWithBasePath() throws IOException {
-        final InputStream in = GithubLoader.forPublic(USER, "raml-loader", "src/test/resources").fetchResource("guru/nidi/loader/simple.raml", -1);
+        final InputStream in = GithubLoader.forPublic(USER, "raml-loader").resourceBase("src/test/resources").fetchResource("guru/nidi/loader/simple.raml", -1);
         assertRamlStart(in);
     }
 
@@ -70,6 +75,11 @@ public class GithubTest {
     @Test
     public void publicGithubWithUri() {
         assertNotNull(new UriLoader().fetchResource("github://nidi3/raml-loader/src/test/resources/guru/nidi/loader/simple.raml", -1));
+    }
+
+    @Test
+    public void publicGithubWithUriAndRef() {
+        assertNotNull(new UriLoader().fetchResource("github://nidi3/raml-loader/src/test/resources/guru/nidi/loader/simple.raml?ref=raml-loader-0.8.1", -1));
     }
 
     @Test

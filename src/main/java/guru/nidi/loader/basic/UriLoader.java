@@ -68,6 +68,11 @@ public class UriLoader implements Loader {
                 res = path.substring(lastSlash + 1);
                 path = path.substring(0, lastSlash);
             }
+            final int query = res.indexOf('?');
+            if (query >= 0) {
+                path += res.substring(query);
+                res = res.substring(0, query);
+            }
             return absoluteLoader(matcher.group(GROUP_PROTOCOL), path, matcher.group(GROUP_USER), matcher.group(GROUP_PASSWORD))
                     .fetchResource(res, ifModifiedSince);
         }

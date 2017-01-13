@@ -24,38 +24,62 @@ import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GithubLoader extends UrlLoader {
+    private final String token;
+    private final String user;
+    private final String project;
     private final String resourceBase;
+    private final String ref;
+    private final CloseableHttpClient httpClient;
 
-    GithubLoader(final String token, String user, String project, String resourceBase, CloseableHttpClient httpClient) {
-        super("https://api.github.com/repos/" + user + "/" + project + "/contents", new SimpleUrlFetcher() {
-            @Override
-            protected HttpGet postProcessGet(HttpGet get) {
-                if (token != null) {
-                    get.addHeader("Authorization", "token " + token);
-                }
-                return get;
-            }
-        }, httpClient);
+    GithubLoader(final String token, String user, String project, String resourceBase, String ref, CloseableHttpClient httpClient) {
+        super("https://api.github.com/repos/" + user + "/" + project + "/contents" + (ref == null ? "" : "?ref=" + ref),
+                new SimpleUrlFetcher() {
+                    @Override
+                    protected HttpGet postProcessGet(HttpGet get) {
+                        if (token != null) {
+                            get.addHeader("Authorization", "token " + token);
+                        }
+                        return get;
+                    }
+                }, httpClient);
+        this.token = token;
+        this.user = user;
+        this.project = project;
         this.resourceBase = (resourceBase == null || resourceBase.length() == 0) ? "" : (resourceBase + "/");
+        this.ref = ref;
+        this.httpClient = httpClient;
     }
 
     public static GithubLoader forPublic(String user, String project) {
-        return new GithubLoader(null, user, project, null, null);
-    }
-
-    public static GithubLoader forPublic(String user, String project, String resourceBase) {
-        return new GithubLoader(null, user, project, resourceBase, null);
+        return new GithubLoader(null, user, project, null, null, null);
     }
 
     public static GithubLoader forPrivate(String token, String user, String project) {
-        return new GithubLoader(token, user, project, null, null);
+        return new GithubLoader(token, user, project, null, null, null);
     }
 
-    public static GithubLoader forPrivate(String token, String user, String project, String resourceBase) {
-        return new GithubLoader(token, user, project, resourceBase, null);
+    public GithubLoader resourceBase(String resourceBase) {
+        return new GithubLoader(token, user, project, resourceBase, ref, httpClient);
+    }
+
+    public GithubLoader ref(String ref) {
+        return new GithubLoader(token, user, project, resourceBase, ref, httpClient);
+    }
+
+    public GithubLoader commit(String commit) {
+        return new GithubLoader(token, user, project, resourceBase, commit, httpClient);
+    }
+
+    public GithubLoader branch(String branch) {
+        return new GithubLoader(token, user, project, resourceBase, branch, httpClient);
+    }
+
+    public GithubLoader tag(String tag) {
+        return new GithubLoader(token, user, project, resourceBase, tag, httpClient);
     }
 
     @Override
@@ -80,18 +104,32 @@ public class GithubLoader extends UrlLoader {
 
         @Override
         public Loader getLoader(String base, String username, String password) {
-            final int firstSlash = base.indexOf('/');
-            final int secondSlash = base.indexOf('/', firstSlash + 1);
-            final String user = base.substring(0, firstSlash);
+            final int queryPos = base.indexOf('?');
+            final String path = queryPos < 0 ? base : base.substring(0,queryPos);
+            final String query = queryPos < 0 ? "" : base.substring(queryPos + 1);
+
+            final Map<String, String> params = parseQuery(query);
+            final int firstSlash = path.indexOf('/');
+            final int secondSlash = path.indexOf('/', firstSlash + 1);
+            final String user = path.substring(0, firstSlash);
             final String project, resourceBase;
             if (secondSlash > 0) {
-                project = base.substring(firstSlash + 1, secondSlash);
-                resourceBase = base.substring(secondSlash + 1);
+                project = path.substring(firstSlash + 1, secondSlash);
+                resourceBase = path.substring(secondSlash + 1);
             } else {
-                project = base.substring(firstSlash + 1);
+                project = path.substring(firstSlash + 1);
                 resourceBase = null;
             }
-            return new GithubLoader(username, user, project, resourceBase, null);
+            return new GithubLoader(username, user, project, resourceBase, params.get("ref"), null);
+        }
+
+        private Map<String, String> parseQuery(String query) {
+            final Map<String, String> params = new HashMap<>();
+            for (final String param : query.split("&")) {
+                final int pos = param.indexOf('=');
+                params.put(pos < 0 ? param : param.substring(0, pos), pos < 0 ? null : param.substring(pos + 1));
+            }
+            return params;
         }
     }
 }
