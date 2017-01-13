@@ -10,7 +10,7 @@
 
     <groupId>guru.nidi.raml</groupId>
     <artifactId>raml-loader</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>${project.artifactId}</name>
     <description>Helps loading RAML files.</description>
@@ -25,7 +25,7 @@
         <connection>scm:git:https://github.com/nidi3/raml-loader</connection>
         <developerConnection>scm:git:https://github.com/nidi3/raml-loader</developerConnection>
         <url>https://github.com/nidi3/raml-loader</url>
-        <tag>HEAD</tag>
+        <tag>raml-loader-1.0.1</tag>
     </scm>
 
     <build>
