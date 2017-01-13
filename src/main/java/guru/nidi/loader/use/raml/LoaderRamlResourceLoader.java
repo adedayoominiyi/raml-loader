@@ -20,9 +20,6 @@ import org.raml.v2.api.loader.ResourceLoader;
 
 import java.io.InputStream;
 
-/**
- *
- */
 public class LoaderRamlResourceLoader implements ResourceLoader {
     private final Loader delegate;
 

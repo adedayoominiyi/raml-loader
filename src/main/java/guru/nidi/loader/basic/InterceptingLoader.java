@@ -19,9 +19,6 @@ import guru.nidi.loader.Loader;
 
 import java.io.InputStream;
 
-/**
- *
- */
 public class InterceptingLoader implements Loader {
     private final Loader delegate;
     private final LoaderInterceptor interceptor;

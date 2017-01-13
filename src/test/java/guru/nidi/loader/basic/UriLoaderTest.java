@@ -35,9 +35,6 @@ import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
 public class UriLoaderTest extends ServerTest {
     @Test
     public void uriRegex() {

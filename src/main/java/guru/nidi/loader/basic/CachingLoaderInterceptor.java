@@ -19,9 +19,6 @@ import guru.nidi.loader.LoadingException;
 
 import java.io.*;
 
-/**
- *
- */
 public abstract class CachingLoaderInterceptor implements LoaderInterceptor {
     @Override
     public InputStream loaded(String name, InputStream result) {

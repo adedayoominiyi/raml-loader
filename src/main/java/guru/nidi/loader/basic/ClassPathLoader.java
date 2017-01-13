@@ -24,9 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-/**
- *
- */
 public class ClassPathLoader implements Loader {
     private static final String FILE_COLON = "file:";
     private final String base;

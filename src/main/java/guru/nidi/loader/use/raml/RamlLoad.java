@@ -19,9 +19,6 @@ import guru.nidi.loader.Loader;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
 
-/**
- *
- */
 public class RamlLoad {
     private final Loader loader;
     private final boolean caching;

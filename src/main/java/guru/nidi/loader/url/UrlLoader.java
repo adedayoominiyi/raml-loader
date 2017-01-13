@@ -25,9 +25,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- *
- */
 public class UrlLoader implements Loader {
     protected final String base;
     protected final CloseableHttpClient client;

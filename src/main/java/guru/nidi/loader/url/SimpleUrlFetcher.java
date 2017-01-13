@@ -28,9 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- *
- */
 public class SimpleUrlFetcher implements UrlFetcher {
     private static final String HTTP_DATE_FORMAT = "E, dd MMM yyyy HH:mm:ss 'GMT'";
 

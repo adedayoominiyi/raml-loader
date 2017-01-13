@@ -20,9 +20,6 @@ import guru.nidi.loader.repository.RepositoryResponse;
 
 import java.util.Map;
 
-/**
- *
- */
 class ApiPortalFilesResponse implements RepositoryResponse {
     private Map<String, ApiPortalFile> files;
     private ApiPortalDirectory directory;

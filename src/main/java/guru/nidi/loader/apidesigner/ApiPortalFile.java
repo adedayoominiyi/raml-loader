@@ -17,9 +17,6 @@ package guru.nidi.loader.apidesigner;
 
 import guru.nidi.loader.repository.RepositoryEntry;
 
-/**
- *
- */
 class ApiPortalFile implements RepositoryEntry {
     private String path;
     private String name;

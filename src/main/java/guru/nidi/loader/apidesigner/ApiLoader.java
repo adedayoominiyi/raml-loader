@@ -26,9 +26,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.List;
 
-/**
- *
- */
 public class ApiLoader extends RepositoryLoader {
     public ApiLoader(String user, String password) {
         this(null, user, password);

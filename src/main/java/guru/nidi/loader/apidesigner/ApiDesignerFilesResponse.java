@@ -23,9 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**
- *
- */
 public class ApiDesignerFilesResponse extends AbstractMap<String, ApiDesignerFile> implements RepositoryResponse {
     private final Map<String, ApiDesignerFile> files = new HashMap<>();
 

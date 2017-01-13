@@ -15,9 +15,6 @@
  */
 package guru.nidi.loader;
 
-/**
- *
- */
 public interface LoaderFactory {
     String supportedProtocol();
 

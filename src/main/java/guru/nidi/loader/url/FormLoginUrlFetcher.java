@@ -30,9 +30,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class FormLoginUrlFetcher extends SimpleUrlFetcher {
     private final String loadPath;
     private final String loginUrl;

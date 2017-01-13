@@ -30,9 +30,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assume.assumeTrue;
 
-/**
- *
- */
 public class GithubTest {
     private static final String USER = "nidi3";
 

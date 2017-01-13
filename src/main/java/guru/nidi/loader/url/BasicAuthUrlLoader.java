@@ -21,9 +21,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.nio.charset.Charset;
 
-/**
- *
- */
 public class BasicAuthUrlLoader extends UrlLoader {
     public BasicAuthUrlLoader(String baseUrl, final String username, final String password, CloseableHttpClient httpClient) {
         super(baseUrl, new SimpleUrlFetcher() {

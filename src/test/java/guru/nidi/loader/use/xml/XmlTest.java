@@ -32,9 +32,6 @@ import java.io.StringReader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- *
- */
 public class XmlTest {
     private final ClassPathLoader loader = new ClassPathLoader("guru/nidi/loader");
 

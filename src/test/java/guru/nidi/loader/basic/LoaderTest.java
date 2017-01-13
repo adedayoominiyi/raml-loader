@@ -30,9 +30,6 @@ import static guru.nidi.loader.util.TestUtils.assertRamlStart;
 import static guru.nidi.loader.util.TestUtils.assertStreamStart;
 import static org.junit.Assert.*;
 
-/**
- *
- */
 public class LoaderTest {
     @Test
     public void includeHandlerNotClosingStream() throws IOException {

@@ -17,9 +17,6 @@ package guru.nidi.loader.apidesigner;
 
 import java.util.List;
 
-/**
- *
- */
 class ApiPortalDirectory {
     private String path;
     private String name;

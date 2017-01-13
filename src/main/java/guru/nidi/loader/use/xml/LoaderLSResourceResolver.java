@@ -25,9 +25,6 @@ import org.w3c.dom.ls.LSResourceResolver;
 import javax.xml.XMLConstants;
 import javax.xml.validation.SchemaFactory;
 
-/**
- *
- */
 public class LoaderLSResourceResolver implements LSResourceResolver {
     private static final DOMImplementationLS DOM_IMPLEMENTATION_LS;
 

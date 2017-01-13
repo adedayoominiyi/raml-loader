@@ -26,9 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-/**
- *
- */
 public class GithubLoader extends UrlLoader {
     private final String resourceBase;
 

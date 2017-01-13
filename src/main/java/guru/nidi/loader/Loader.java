@@ -17,9 +17,6 @@ package guru.nidi.loader;
 
 import java.io.InputStream;
 
-/**
- *
- */
 public interface Loader {
 
     /**

@@ -26,9 +26,6 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertNotNull;
 
-/**
- *
- */
 public class ApiLoaderTest {
     private ApiLoader loader;
 

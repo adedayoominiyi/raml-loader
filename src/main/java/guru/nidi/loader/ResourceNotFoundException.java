@@ -15,9 +15,6 @@
  */
 package guru.nidi.loader;
 
-/**
- *
- */
 public class ResourceNotFoundException extends RuntimeException {
     private final String resourceName;
 

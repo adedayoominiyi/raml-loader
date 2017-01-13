@@ -40,9 +40,6 @@ import static guru.nidi.codeassert.junit.CodeAssertMatchers.packagesMatchExactly
 import static guru.nidi.codeassert.pmd.Rulesets.*;
 import static org.junit.Assert.assertThat;
 
-/**
- *
- */
 public class CodeAnalysisTest extends CodeAssertTest {
     @Test
     public void dependencies() {

@@ -15,9 +15,6 @@
  */
 package guru.nidi.loader.repository;
 
-/**
- *
- */
 public interface RepositoryResponse {
     Iterable<? extends RepositoryEntry> getFiles();
 }

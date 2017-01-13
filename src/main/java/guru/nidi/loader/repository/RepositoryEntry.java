@@ -15,9 +15,6 @@
  */
 package guru.nidi.loader.repository;
 
-/**
- *
- */
 public interface RepositoryEntry {
     String getName();
 

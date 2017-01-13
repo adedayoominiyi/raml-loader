@@ -28,9 +28,6 @@ import javax.servlet.ServletException;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- *
- */
 public abstract class ServerTest {
     private static Tomcat tomcat;
     private static Set<Class<?>> inited = new HashSet<>();

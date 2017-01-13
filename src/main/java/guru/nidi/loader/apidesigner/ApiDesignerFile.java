@@ -21,9 +21,6 @@ import guru.nidi.loader.repository.RepositoryEntry;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-/**
- *
- */
 public class ApiDesignerFile implements RepositoryEntry {
     private String name;
     private String path;

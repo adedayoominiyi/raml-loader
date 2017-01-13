@@ -25,9 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-/**
- *
- */
 public class RepositoryLoader implements Loader {
     private final Loader loader;
     private final String defaultResourceName;

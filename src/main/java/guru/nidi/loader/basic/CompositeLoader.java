@@ -20,9 +20,6 @@ import guru.nidi.loader.ResourceNotFoundException;
 
 import java.io.InputStream;
 
-/**
- *
- */
 public class CompositeLoader implements Loader {
     private final Loader[] loaders;
 
