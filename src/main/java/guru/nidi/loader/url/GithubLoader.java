@@ -49,7 +49,7 @@ public class GithubLoader extends UrlLoader {
         this.token = token;
         this.user = user;
         this.project = project;
-        this.resourceBase = (resourceBase == null || resourceBase.length() == 0) ? "" : (resourceBase + "/");
+        this.resourceBase = resourceBase;
         this.ref = ref;
         this.httpClient = httpClient;
     }
@@ -84,7 +84,8 @@ public class GithubLoader extends UrlLoader {
 
     @Override
     public InputStream fetchResource(String name, long ifModifiedSince) {
-        try (final InputStream raw = fetcher.fetchFromUrl(client, base, resourceBase + name, ifModifiedSince)) {
+        final String res = (resourceBase == null || resourceBase.length() == 0) ? "" : (resourceBase + "/");
+        try (final InputStream raw = fetcher.fetchFromUrl(client, base, res + name, ifModifiedSince)) {
             if (raw == null) {
                 return null;
             }
@@ -92,7 +93,7 @@ public class GithubLoader extends UrlLoader {
             final Map<String, String> desc = new ObjectMapper().readValue(raw, Map.class);
             return fetcher.fetchFromUrl(client, desc.get("download_url"), "", ifModifiedSince);
         } catch (IOException e) {
-            throw new ResourceNotFoundException(resourceBase + name, e);
+            throw new ResourceNotFoundException(res + name, e);
         }
     }
 
@@ -105,7 +106,7 @@ public class GithubLoader extends UrlLoader {
         @Override
         public Loader getLoader(String base, String username, String password) {
             final int queryPos = base.indexOf('?');
-            final String path = queryPos < 0 ? base : base.substring(0,queryPos);
+            final String path = queryPos < 0 ? base : base.substring(0, queryPos);
             final String query = queryPos < 0 ? "" : base.substring(queryPos + 1);
 
             final Map<String, String> params = parseQuery(query);
