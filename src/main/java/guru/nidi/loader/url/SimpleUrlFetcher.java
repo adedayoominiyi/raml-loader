@@ -33,11 +33,7 @@ public class SimpleUrlFetcher implements UrlFetcher {
 
     @Override
     public InputStream fetchFromUrl(CloseableHttpClient client, String base, String name, long ifModifiedSince) throws IOException {
-        final int pos = base.indexOf('?');
-        final String path = pos < 0 ? base : base.substring(0, pos);
-        final String query = pos < 0 ? "" : base.substring(pos);
-        final String suffix = (name == null || name.length() == 0) ? "" : ("/" + encodeUrl(name));
-        final HttpGet get = postProcessGet(new HttpGet(path + suffix + query));
+        final HttpGet get = postProcessGet(new HttpGet(createUrl(base, name)));
         if (ifModifiedSince > 0) {
             get.addHeader("if-modified-since", httpDate(ifModifiedSince));
         }
@@ -53,6 +49,14 @@ public class SimpleUrlFetcher implements UrlFetcher {
             default:
                 throw new IOException("Http response status not ok: " + getResult.getStatusLine().toString());
         }
+    }
+
+    private String createUrl(String base, String name) {
+        final int pos = base.indexOf('?');
+        final String path = pos < 0 ? base : base.substring(0, pos);
+        final String query = pos < 0 ? "" : base.substring(pos);
+        final String suffix = (name == null || name.length() == 0) ? "" : ("/" + encodeUrl(name));
+        return path + suffix + query;
     }
 
     protected String encodeUrl(String name) {

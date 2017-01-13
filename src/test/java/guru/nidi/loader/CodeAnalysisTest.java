@@ -29,6 +29,7 @@ import guru.nidi.codeassert.model.ModelAnalyzer;
 import guru.nidi.codeassert.model.ModelResult;
 import guru.nidi.codeassert.pmd.*;
 import guru.nidi.loader.basic.LoaderTest;
+import guru.nidi.loader.basic.UriLoader;
 import guru.nidi.loader.basic.UriLoaderTest;
 import guru.nidi.loader.use.raml.RamlCache;
 import guru.nidi.loader.use.xml.LoaderLSResourceResolver;
@@ -95,12 +96,14 @@ public class CodeAnalysisTest extends CodeAssertTest {
                         In.clazz(RamlCache.class).ignore("ArrayIsStoredDirectly"),
                         In.clazz(UriLoaderTest.class).ignore("JUnitTestContainsTooManyAsserts"),
                         In.clazz(LoaderLSResourceResolver.class).ignore("AvoidCatchingGenericException"),
+                        In.clazz(UriLoader.class).ignore("UseStringBufferForStringAppends"),
                         In.loc("CodeCoverage").ignore("NoPackage"))
                 .because("It's Jackson mapping", In.loc("ApiPortalFile")
                         .ignore("MethodNamingConventions", "VariableNamingConventions"))
                 .because("I don't agree", In.everywhere()
                         .ignore("JUnitAssertionsShouldIncludeMessage", "MethodArgumentCouldBeFinal",
-                                "AbstractNaming", "EmptyMethodInAbstractClassShouldBeAbstract", "SimplifyStartsWith"));
+                                "AbstractNaming", "EmptyMethodInAbstractClassShouldBeAbstract", "SimplifyStartsWith",
+                                "AvoidFieldNameMatchingMethodName"));
 
         return new PmdAnalyzer(AnalyzerConfig.maven().mainAndTest(), collector)
                 .withRuleSets(basic(), braces(), design(), exceptions(), imports(), junit(),
