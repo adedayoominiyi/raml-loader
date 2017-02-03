@@ -14,10 +14,10 @@ public class CodeCoverage {
         final JacocoAnalyzer analyzer = new JacocoAnalyzer(new CoverageCollector(BRANCH, LINE, METHOD)
                 .just(For.global().setMinima(25, 40, 40))
                 .just(For.allPackages().setMinima(40, 40, 40))
-                .just(For.packge("*apidesigner").setMinima(75, 10, 10))
-                .just(For.packge("*repository").setMinima(0, 40, 60))
-                .just(For.packge("*raml").setMinima(0, 10, 20))
-                .just(For.packge("*basic").setMinima(20, 50, 50))
+                .just(For.packge("*.apidesigner").setMinima(75, 10, 10))
+                .just(For.packge("*.repository").setMinima(0, 40, 60))
+                .just(For.packge("*.raml").setMinima(0, 10, 20))
+                .just(For.packge("*.basic").setMinima(20, 50, 50))
         );
         assertThat(analyzer.analyze(), hasEnoughCoverage());
     }
