@@ -34,6 +34,7 @@ import guru.nidi.loader.basic.UriLoaderTest;
 import guru.nidi.loader.use.raml.RamlCache;
 import guru.nidi.loader.use.xml.LoaderLSResourceResolver;
 import guru.nidi.loader.util.ServerTest;
+import guru.nidi.loader.util.TestUtils;
 import net.sourceforge.pmd.RulePriority;
 import org.junit.Test;
 
@@ -91,7 +92,9 @@ public class CodeAnalysisTest extends CodeAssertTest {
                         .ignore("JUnitTestContainsTooManyAsserts", "JUnitTestsShouldIncludeAssert"))
                 .just(In.clazz(CodeAnalysisTest.class)
                         .ignore("SuspiciousConstantFieldName", "VariableNamingConventions", "AvoidDollarSigns"))
-                .because("It's a test", In.loc("*Test").ignore("AvoidDuplicateLiterals"))
+                .because("It's a test",
+                        In.loc("*Test").ignore("AvoidDuplicateLiterals"),
+                        In.clazz(TestUtils.class).ignore("TooManyStaticImports"))
                 .because("It's ok",
                         In.clazz(RamlCache.class).ignore("ArrayIsStoredDirectly"),
                         In.clazz(UriLoaderTest.class).ignore("JUnitTestContainsTooManyAsserts"),
