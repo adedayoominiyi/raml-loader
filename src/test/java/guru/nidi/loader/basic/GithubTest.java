@@ -27,14 +27,13 @@ import java.util.Date;
 import static guru.nidi.loader.util.TestUtils.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assume.assumeTrue;
 
 public class GithubTest {
     private static final String USER = "nidi3";
 
     @BeforeClass
     public static void init() {
-        assumeTrue("/Users/nidi".equals(System.getenv("HOME")));
+        assumeMyLocalMachine();
     }
 
     @Test

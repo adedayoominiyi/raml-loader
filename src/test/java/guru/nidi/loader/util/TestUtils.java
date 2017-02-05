@@ -24,6 +24,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
+import static org.junit.Assume.assumeTrue;
 
 public final class TestUtils {
     private static final String RAML_0_8 = "#%RAML 0.8";
@@ -35,6 +36,10 @@ public final class TestUtils {
         final String env = System.getenv(name);
         assumeThat("Environment variable " + name + " is not set, skipping test", env, notNullValue());
         return env;
+    }
+
+    public static void assumeMyLocalMachine(){
+        assumeTrue("/Users/nidi".equals(System.getenv("HOME")));
     }
 
     public static void assertStreamStart(InputStream in, String s) throws IOException {
