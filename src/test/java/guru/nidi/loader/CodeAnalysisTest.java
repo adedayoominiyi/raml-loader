@@ -25,21 +25,19 @@ import guru.nidi.codeassert.findbugs.BugCollector;
 import guru.nidi.codeassert.findbugs.FindBugsAnalyzer;
 import guru.nidi.codeassert.findbugs.FindBugsResult;
 import guru.nidi.codeassert.junit.CodeAssertTest;
+import guru.nidi.codeassert.junit.PredefConfig;
 import guru.nidi.codeassert.model.ModelAnalyzer;
 import guru.nidi.codeassert.model.ModelResult;
 import guru.nidi.codeassert.pmd.*;
 import guru.nidi.loader.basic.LoaderTest;
-import guru.nidi.loader.basic.UriLoader;
 import guru.nidi.loader.basic.UriLoaderTest;
 import guru.nidi.loader.use.raml.RamlCache;
 import guru.nidi.loader.use.xml.LoaderLSResourceResolver;
 import guru.nidi.loader.util.ServerTest;
-import guru.nidi.loader.util.TestUtils;
 import net.sourceforge.pmd.RulePriority;
 import org.junit.Test;
 
 import static guru.nidi.codeassert.junit.CodeAssertMatchers.packagesMatchExactly;
-import static guru.nidi.codeassert.pmd.Rulesets.*;
 import static org.junit.Assert.assertThat;
 
 public class CodeAnalysisTest extends CodeAssertTest {
@@ -75,11 +73,11 @@ public class CodeAnalysisTest extends CodeAssertTest {
     @Override
     protected FindBugsResult analyzeFindBugs() {
         final BugCollector collector = new BugCollector().minPriority(Priorities.NORMAL_PRIORITY)
+                .apply(PredefConfig.dependencyTestIgnore(CodeAnalysisTest.class))
                 .just(In.clazz(RamlCache.class)
                         //TODO is this a problem?
                         .ignore("RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", "DMI_NONSERIALIZABLE_OBJECT_WRITTEN"))
                 .because("It's a test",
-                        In.clazz(CodeAnalysisTest.class).ignore("UUF_UNUSED_FIELD", "UWF_UNWRITTEN_FIELD"),
                         In.clazz(ServerTest.class).ignore("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
                 );
         return new FindBugsAnalyzer(AnalyzerConfig.maven().mainAndTest(), collector).analyze();
@@ -87,39 +85,28 @@ public class CodeAnalysisTest extends CodeAssertTest {
 
     @Override
     protected PmdResult analyzePmd() {
-        final ViolationCollector collector = new ViolationCollector().minPriority(RulePriority.MEDIUM)
+        final PmdViolationCollector collector = new PmdViolationCollector().minPriority(RulePriority.MEDIUM)
+                .apply(PredefConfig.minimalPmdIgnore())
+                .apply(PredefConfig.dependencyTestIgnore(CodeAnalysisTest.class))
                 .just(In.clazz(LoaderTest.class)
                         .ignore("JUnitTestContainsTooManyAsserts", "JUnitTestsShouldIncludeAssert"))
-                .just(In.clazz(CodeAnalysisTest.class)
-                        .ignore("SuspiciousConstantFieldName", "VariableNamingConventions", "AvoidDollarSigns"))
-                .because("It's a test",
-                        In.loc("*Test").ignore("AvoidDuplicateLiterals"),
-                        In.clazz(TestUtils.class).ignore("TooManyStaticImports"))
                 .because("It's ok",
                         In.clazz(RamlCache.class).ignore("ArrayIsStoredDirectly"),
                         In.clazz(UriLoaderTest.class).ignore("JUnitTestContainsTooManyAsserts"),
-                        In.clazz(LoaderLSResourceResolver.class).ignore("AvoidCatchingGenericException"),
-                        In.clazz(UriLoader.class).ignore("UseStringBufferForStringAppends"),
-                        In.loc("CodeCoverage").ignore("NoPackage"))
+                        In.clazz(LoaderLSResourceResolver.class).ignore("AvoidCatchingGenericException"))
                 .because("It's Jackson mapping", In.loc("ApiPortalFile")
                         .ignore("MethodNamingConventions", "VariableNamingConventions"))
                 .because("I don't agree", In.everywhere()
-                        .ignore("JUnitAssertionsShouldIncludeMessage", "MethodArgumentCouldBeFinal",
-                                "AbstractNaming", "EmptyMethodInAbstractClassShouldBeAbstract", "SimplifyStartsWith",
-                                "AvoidFieldNameMatchingMethodName"));
+                        .ignore("SimplifyStartsWith"));
 
         return new PmdAnalyzer(AnalyzerConfig.maven().mainAndTest(), collector)
-                .withRuleSets(basic(), braces(), design(), exceptions(), imports(), junit(),
-                        optimizations(), strings(), sunSecure(), typeResolution(), unnecessary(), unused(),
-                        codesize().tooManyMethods(35),
-                        empty().allowCommentedEmptyCatch(true),
-                        naming().variableLen(1, 25))
+                .withRulesets(PredefConfig.defaultPmdRulesets())
                 .analyze();
     }
 
     @Override
     protected CpdResult analyzeCpd() {
-        final MatchCollector collector = new MatchCollector()
+        final CpdMatchCollector collector = new CpdMatchCollector()
                 .because("It's Jackson mapping", In.loc("ApiPortal*").ignoreAll());
 
         return new CpdAnalyzer(AnalyzerConfig.maven().main(), 30, collector).analyze();
