@@ -51,11 +51,11 @@ public class CodeAnalysisTest extends CodeAssertTest {
         final OrgRamlV2 orgRamlV2 = new OrgRamlV2();
 
         class GuruNidiLoader extends DependencyRuler {
-            DependencyRule _, $self, apidesigner, repository, url, useRaml;
+            DependencyRule apidesigner, repository, url, useRaml;
 
             @Override
             public void defineRules() {
-                $self.mayBeUsedBy(_);
+                base().mayBeUsedBy(all());
                 apidesigner.mayUse(repository, url);
                 useRaml.mayUse(orgRamlV2.api, orgRamlV2.apiLoader);
             }
@@ -87,7 +87,7 @@ public class CodeAnalysisTest extends CodeAssertTest {
 
     @Override
     protected PmdResult analyzePmd() {
-        final ViolationCollector collector = new ViolationCollector().minPriority(RulePriority.MEDIUM)
+        final PmdViolationCollector collector = new PmdViolationCollector().minPriority(RulePriority.MEDIUM)
                 .just(In.clazz(LoaderTest.class)
                         .ignore("JUnitTestContainsTooManyAsserts", "JUnitTestsShouldIncludeAssert"))
                 .just(In.clazz(CodeAnalysisTest.class)
@@ -109,7 +109,7 @@ public class CodeAnalysisTest extends CodeAssertTest {
                                 "AvoidFieldNameMatchingMethodName"));
 
         return new PmdAnalyzer(AnalyzerConfig.maven().mainAndTest(), collector)
-                .withRuleSets(basic(), braces(), design(), exceptions(), imports(), junit(),
+                .withRulesets(basic(), braces(), design(), exceptions(), imports(), junit(),
                         optimizations(), strings(), sunSecure(), typeResolution(), unnecessary(), unused(),
                         codesize().tooManyMethods(35),
                         empty().allowCommentedEmptyCatch(true),
@@ -119,7 +119,7 @@ public class CodeAnalysisTest extends CodeAssertTest {
 
     @Override
     protected CpdResult analyzeCpd() {
-        final MatchCollector collector = new MatchCollector()
+        final CpdMatchCollector collector = new CpdMatchCollector()
                 .because("It's Jackson mapping", In.loc("ApiPortal*").ignoreAll());
 
         return new CpdAnalyzer(AnalyzerConfig.maven().main(), 30, collector).analyze();
